@@ -2,201 +2,202 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>School Messaging Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>School Classroom Messenger</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
         body {
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
-            background: linear-gradient(135deg, #f0fdf4 0%, #e6f4ea 50%, #f4fbf7 100%);
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #f1f5f9;
         }
         .apple-glass {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(25px) saturate(180%);
-            -webkit-backdrop-filter: blur(25px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-        }
-        .apple-card {
-            background: #ffffff;
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.05), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
         .custom-scrollbar::-webkit-scrollbar {
-            width: 5px;
+            width: 4px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-            background: rgba(241, 245, 249, 0.3);
+            background: transparent;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
             background: #cbd5e1;
-            border-radius: 20px;
+            border-radius: 10px;
         }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
+        /* Mobile viewport height fix */
+        .app-height {
+            height: 100vh;
+            height: 100dvh;
         }
     </style>
 </head>
-<body class="text-slate-800 min-h-screen flex flex-col justify-center items-center p-2 sm:p-4 md:p-6 select-none overflow-x-hidden">
+<body class="text-slate-800 app-height flex justify-center items-center select-none overflow-hidden sm:p-4">
 
-    <!-- APPLE LIGHT BACKGROUND BLUR ORBS -->
-    <div class="fixed top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-emerald-200/40 rounded-full blur-[130px] pointer-events-none"></div>
-    <div class="fixed bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-teal-200/30 rounded-full blur-[130px] pointer-events-none"></div>
-
-    <!-- MAIN APP WRAPPER -->
-    <div class="w-full max-w-6xl h-[94vh] max-h-[860px] apple-glass rounded-[32px] shadow-2xl shadow-emerald-950/5 overflow-hidden flex flex-col relative z-10 transition-all duration-300">
+    <!-- MAIN APP CONTAINER (RESPONSIVE MOBILE VIEW) -->
+    <div class="w-full max-w-md sm:max-w-4xl h-full sm:h-[92vh] sm:max-h-[850px] bg-slate-50 sm:rounded-[32px] sm:shadow-2xl sm:border sm:border-slate-200/80 overflow-hidden flex flex-col relative">
 
         <!-- AUTH SCREEN (LOGIN / REGISTER) -->
-        <div id="authScreen" class="flex-1 flex items-center justify-center p-4 sm:p-8">
-            <div class="w-full max-w-md apple-card p-8 rounded-[28px] relative overflow-hidden">
+        <div id="authScreen" class="flex-1 flex flex-col justify-between p-6 sm:p-10 overflow-y-auto bg-gradient-to-b from-emerald-50/60 via-slate-50 to-white">
+            <div></div>
+
+            <div class="w-full max-w-sm mx-auto">
                 <div class="text-center mb-8">
-                    <div class="w-16 h-16 bg-emerald-500 text-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl shadow-emerald-500/25 transition-transform hover:scale-105 duration-200">
+                    <div class="w-16 h-16 bg-emerald-600 text-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl shadow-emerald-600/20">
                         <i class="fa-solid fa-graduation-cap text-2xl"></i>
                     </div>
-                    <h2 class="text-2xl font-bold text-slate-900 tracking-tight">School Portal</h2>
+                    <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Classroom Portal</h2>
                     <p class="text-xs font-medium text-slate-500 mt-1">Connect directly with your Teacher</p>
                 </div>
 
                 <!-- Role Selector Tabs -->
-                <div class="flex bg-slate-100 p-1 rounded-2xl mb-6 border border-slate-200/60">
+                <div class="flex bg-slate-200/70 p-1 rounded-2xl mb-6">
                     <button id="tabStudent" onclick="switchAuthTab('student')" class="flex-1 py-2.5 text-xs font-semibold rounded-xl transition-all duration-200 bg-white text-emerald-700 shadow-sm">
-                        <i class="fa-solid fa-user-graduate mr-1.5"></i> Student
+                        <i class="fa-solid fa-user-graduate mr-1"></i> Student
                     </button>
-                    <button id="tabTeacher" onclick="switchAuthTab('teacher')" class="flex-1 py-2.5 text-xs font-semibold rounded-xl transition-all duration-200 text-slate-500 hover:text-slate-800">
-                        <i class="fa-solid fa-chalkboard-user mr-1.5"></i> Teacher
+                    <button id="tabTeacher" onclick="switchAuthTab('teacher')" class="flex-1 py-2.5 text-xs font-semibold rounded-xl transition-all duration-200 text-slate-500">
+                        <i class="fa-solid fa-chalkboard-user mr-1"></i> Teacher
                     </button>
                 </div>
 
                 <!-- Form -->
                 <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
                     <div id="nameGroup">
-                        <label class="block text-xs font-semibold text-slate-600 mb-1.5 ml-1">Full Name</label>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1 ml-1">Full Name</label>
                         <div class="relative">
                             <i class="fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                            <input type="text" id="authName" placeholder="Enter your full name" class="w-full bg-slate-50/80 border border-slate-200 focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 rounded-2xl pl-11 pr-4 py-3 text-xs sm:text-sm text-slate-800 placeholder-slate-400 outline-none transition duration-200">
+                            <input type="text" id="authName" placeholder="Enter your full name" class="w-full bg-white border border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 rounded-2xl pl-11 pr-4 py-3.5 text-sm text-slate-800 placeholder-slate-400 outline-none transition">
                         </div>
                     </div>
 
                     <div>
-                        <label id="pinLabel" class="block text-xs font-semibold text-slate-600 mb-1.5 ml-1">4-Digit PIN</label>
+                        <label id="pinLabel" class="block text-xs font-semibold text-slate-600 mb-1 ml-1">4-Digit Security PIN</label>
                         <div class="relative">
-                            <i class="fa-solid fa-key absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                            <input type="password" id="authPin" maxlength="4" placeholder="••••" class="w-full bg-slate-50/80 border border-slate-200 focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 rounded-2xl pl-11 pr-4 py-3 text-xs sm:text-sm text-slate-800 placeholder-slate-400 outline-none tracking-widest transition duration-200">
+                            <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                            <input type="password" id="authPin" maxlength="4" placeholder="••••" class="w-full bg-white border border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 rounded-2xl pl-11 pr-4 py-3.5 text-sm text-slate-800 placeholder-slate-400 outline-none tracking-widest transition">
                         </div>
                     </div>
 
-                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-3.5 rounded-2xl shadow-lg shadow-emerald-600/20 active:scale-[0.98] transition duration-200 text-xs sm:text-sm mt-3 flex items-center justify-center gap-2">
-                        <span>Continue</span>
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-3.5 rounded-2xl shadow-lg shadow-emerald-600/20 active:scale-[0.98] transition duration-200 text-sm mt-3 flex items-center justify-center gap-2">
+                        <span>Enter Chat Room</span>
                         <i class="fa-solid fa-arrow-right text-xs"></i>
                     </button>
                 </form>
+            </div>
 
-                <div id="authNotice" class="mt-4 text-center text-[11px] text-slate-400 font-medium">
-                    New students are automatically registered on first sign-in.
-                </div>
+            <div id="authNotice" class="text-center text-[11px] text-slate-400 font-medium py-2">
+                New students are automatically registered on first login.
             </div>
         </div>
 
         <!-- MAIN DASHBOARD -->
         <div id="mainDashboard" class="flex-1 flex flex-col hidden h-full overflow-hidden">
             
-            <!-- TOP NAVBAR -->
-            <header class="h-16 border-b border-slate-200/80 bg-white/70 px-4 sm:px-6 flex items-center justify-between backdrop-blur-xl">
+            <!-- TOP APP BAR -->
+            <header class="h-16 border-b border-slate-200/80 bg-white px-3 sm:px-5 flex items-center justify-between shrink-0 shadow-sm z-20">
                 
-                <!-- LEFT HAND SIDE: BIG SHUTDOWN / LOGOUT BUTTON -->
-                <div class="flex items-center gap-3">
-                    <button onclick="handleLogout()" title="Log Out" class="w-11 h-11 rounded-2xl bg-red-50 hover:bg-red-500 hover:text-white border border-red-200/80 text-red-500 flex items-center justify-center shadow-sm transition-all duration-200 active:scale-90 group shrink-0">
-                        <i class="fa-solid fa-power-off text-lg group-hover:rotate-12 transition-transform duration-200"></i>
+                <!-- SHUTDOWN / LOGOUT BUTTON ON LEFT -->
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <button onclick="handleLogout()" title="Log Out" class="w-10 h-10 rounded-2xl bg-red-50 hover:bg-red-500 hover:text-white border border-red-200/80 text-red-500 flex items-center justify-center transition active:scale-90 group shrink-0">
+                        <i class="fa-solid fa-power-off text-base group-hover:rotate-12 transition-transform duration-200"></i>
                     </button>
-                    <div class="h-6 w-[1px] bg-slate-200"></div>
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center text-emerald-600">
-                            <i id="navRoleIcon" class="fa-solid fa-user-graduate text-xs"></i>
+
+                    <button id="mobileBackBtn" onclick="toggleMobileSidebar()" class="sm:hidden w-10 h-10 rounded-2xl bg-slate-100 text-slate-600 flex items-center justify-center hidden">
+                        <i class="fa-solid fa-users text-sm"></i>
+                    </button>
+
+                    <div class="h-5 w-[1px] bg-slate-200"></div>
+
+                    <!-- USER INFO -->
+                    <div class="flex items-center gap-2">
+                        <div class="w-9 h-9 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-700 flex items-center justify-center text-xs font-bold shrink-0">
+                            <i id="navRoleIcon" class="fa-solid fa-user-graduate"></i>
                         </div>
-                        <div>
-                            <h1 id="navUserName" class="text-xs sm:text-sm font-bold text-slate-900 leading-none">User Name</h1>
-                            <p id="navUserRole" class="text-[10px] font-medium text-slate-500 mt-1 flex items-center gap-1">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span>
-                                Student
+                        <div class="leading-tight truncate max-w-[120px] sm:max-w-[180px]">
+                            <h1 id="navUserName" class="text-xs sm:text-sm font-bold text-slate-900 truncate">User</h1>
+                            <p id="navUserRole" class="text-[10px] font-medium text-slate-500 flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span> Student
                             </p>
                         </div>
                     </div>
                 </div>
 
-                <!-- RIGHT SIDE: STATUS -->
-                <div id="syncBadge" class="px-3 py-1 rounded-full bg-slate-100/80 border border-slate-200/60 text-[11px] font-medium text-slate-500 flex items-center gap-1.5">
+                <!-- SYNC STATUS BADGE -->
+                <div id="syncBadge" class="px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200/60 text-[10px] font-semibold text-emerald-700 flex items-center gap-1.5">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span id="syncText">Synced</span>
+                    <span id="syncText">Connected</span>
                 </div>
             </header>
 
-            <!-- CHAT WORKSPACE BODY -->
+            <!-- WORKSPACE PANEL -->
             <div class="flex-1 flex overflow-hidden relative">
 
-                <!-- SIDEBAR (FOR TEACHER TO SELECT STUDENTS) -->
-                <aside id="teacherSidebar" class="w-full sm:w-72 md:w-80 border-r border-slate-200/80 bg-slate-50/50 flex flex-col hidden sm:flex">
-                    <div class="p-3.5 border-b border-slate-200/80 bg-white/50 flex items-center justify-between">
-                        <span class="text-xs font-bold text-slate-600 uppercase tracking-wider flex items-center gap-2">
-                            <i class="fa-solid fa-users text-emerald-600"></i> Students List
+                <!-- SIDEBAR (FOR TEACHER) -->
+                <aside id="teacherSidebar" class="absolute inset-0 z-30 bg-white sm:relative sm:z-0 w-full sm:w-72 md:w-80 border-r border-slate-200 flex flex-col hidden sm:flex">
+                    <div class="p-3.5 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
+                        <span class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-users text-emerald-600"></i> Student Messages
                         </span>
                         <button onclick="loadRemoteData()" title="Refresh" class="text-slate-400 hover:text-slate-700 text-xs p-1">
                             <i class="fa-solid fa-rotate"></i>
                         </button>
                     </div>
 
-                    <div id="studentListContainer" class="flex-1 overflow-y-auto custom-scrollbar p-2.5 space-y-1.5">
-                        <!-- Student Item Template -->
+                    <div id="studentListContainer" class="flex-1 overflow-y-auto custom-scrollbar p-2 space-y-1">
+                        <!-- Student List Renders Here -->
                     </div>
                 </aside>
 
-                <!-- CHAT PANEL -->
-                <main class="flex-1 flex flex-col bg-white/40 relative">
+                <!-- CHAT MESSAGING BODY -->
+                <main class="flex-1 flex flex-col bg-[#f8fafc] relative w-full overflow-hidden">
                     
-                    <!-- Chat Header -->
-                    <div id="chatHeader" class="p-3.5 px-4 sm:px-6 border-b border-slate-200/80 bg-white/60 flex items-center justify-between">
+                    <!-- CHAT HEADER BANNER -->
+                    <div id="chatHeader" class="p-3 px-4 border-b border-slate-200/80 bg-white flex items-center justify-between shrink-0">
                         <div class="flex items-center gap-3">
-                            <button id="mobileBackBtn" onclick="toggleMobileSidebar()" class="sm:hidden text-slate-500 hover:text-slate-800 mr-1 hidden">
-                                <i class="fa-solid fa-arrow-left"></i>
-                            </button>
-                            <div class="w-9 h-9 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm font-semibold border border-emerald-200/60">
+                            <div class="w-9 h-9 rounded-full bg-emerald-600 text-white flex items-center justify-center text-sm shadow-md shadow-emerald-600/20 shrink-0">
                                 <i id="chatHeaderIcon" class="fa-solid fa-chalkboard-user"></i>
                             </div>
                             <div>
-                                <h3 id="chatHeaderTitle" class="text-xs sm:text-sm font-bold text-slate-900">Teacher</h3>
-                                <p id="chatHeaderSubtitle" class="text-[10px] text-slate-500 font-medium">Direct messages</p>
+                                <h3 id="chatHeaderTitle" class="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Teacher</h3>
+                                <p id="chatHeaderSubtitle" class="text-[10px] text-slate-500 font-medium">Online | Class Direct Line</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Messages Display -->
-                    <div id="messagesContainer" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-3.5 custom-scrollbar">
-                        <!-- Chat history renders here -->
+                    <!-- MESSAGES FEED (WITH DATE STAMPS & TIME) -->
+                    <div id="messagesContainer" class="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 custom-scrollbar">
+                        <!-- Messages dynamically render here -->
                     </div>
 
-                    <!-- PREDEFINED QUICK ASK BAR (FOR STUDENTS) -->
-                    <div id="predefinedChatBar" class="p-2 sm:p-2.5 px-4 border-t border-slate-200/60 bg-white/80 overflow-x-auto flex items-center gap-2 custom-scrollbar">
-                        <span class="text-[11px] font-bold text-emerald-700 whitespace-nowrap flex items-center gap-1 mr-1">
-                            <i class="fa-solid fa-bolt"></i> Quick Ask:
+                    <!-- PREDEFINED CHAT QUICK BUTTONS FOR STUDENTS -->
+                    <div id="predefinedChatBar" class="p-2 px-3 border-t border-slate-200/80 bg-white overflow-x-auto flex items-center gap-2 shrink-0 custom-scrollbar">
+                        <span class="text-[10px] font-bold text-emerald-700 whitespace-nowrap flex items-center gap-1 mr-0.5">
+                            <i class="fa-solid fa-bolt"></i> Ask:
                         </span>
-                        <button onclick="sendPredefinedMessage('Syllabus')" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-emerald-50 hover:border-emerald-300 border border-slate-200 text-slate-700 hover:text-emerald-700 text-xs font-medium transition duration-150 whitespace-nowrap active:scale-95 shadow-sm">
+                        <button onclick="sendPredefinedMessage('Syllabus')" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-emerald-50 hover:border-emerald-300 border border-slate-200 text-slate-700 hover:text-emerald-700 text-xs font-medium transition active:scale-95 whitespace-nowrap shadow-2xs">
                             📚 Exam Syllabus
                         </button>
-                        <button onclick="sendPredefinedMessage('Assignment')" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-emerald-50 hover:border-emerald-300 border border-slate-200 text-slate-700 hover:text-emerald-700 text-xs font-medium transition duration-150 whitespace-nowrap active:scale-95 shadow-sm">
-                            📝 Homework Assignment
+                        <button onclick="sendPredefinedMessage('Assignment')" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-emerald-50 hover:border-emerald-300 border border-slate-200 text-slate-700 hover:text-emerald-700 text-xs font-medium transition active:scale-95 whitespace-nowrap shadow-2xs">
+                            📝 Homework
                         </button>
-                        <button onclick="sendPredefinedMessage('Timings')" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-emerald-50 hover:border-emerald-300 border border-slate-200 text-slate-700 hover:text-emerald-700 text-xs font-medium transition duration-150 whitespace-nowrap active:scale-95 shadow-sm">
-                            ⏰ Class Timings
+                        <button onclick="sendPredefinedMessage('Timings')" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-emerald-50 hover:border-emerald-300 border border-slate-200 text-slate-700 hover:text-emerald-700 text-xs font-medium transition active:scale-95 whitespace-nowrap shadow-2xs">
+                            ⏰ Class Timing
                         </button>
-                        <button onclick="sendPredefinedMessage('Notes')" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-emerald-50 hover:border-emerald-300 border border-slate-200 text-slate-700 hover:text-emerald-700 text-xs font-medium transition duration-150 whitespace-nowrap active:scale-95 shadow-sm">
-                            📄 Chapter Notes
+                        <button onclick="sendPredefinedMessage('Notes')" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-emerald-50 hover:border-emerald-300 border border-slate-200 text-slate-700 hover:text-emerald-700 text-xs font-medium transition active:scale-95 whitespace-nowrap shadow-2xs">
+                            📄 Notes PDF
                         </button>
                     </div>
 
-                    <!-- Input Box -->
-                    <form onsubmit="handleSendMessage(event)" class="p-3 sm:p-4 bg-white/90 border-t border-slate-200/80 flex items-center gap-2">
-                        <input type="text" id="messageInput" placeholder="Type your message here..." class="flex-1 bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 rounded-2xl px-4 py-3 text-xs sm:text-sm text-slate-800 placeholder-slate-400 outline-none transition duration-200">
-                        <button type="submit" class="bg-emerald-600 hover:bg-emerald-500 text-white w-11 h-11 rounded-2xl flex items-center justify-center shadow-md shadow-emerald-600/20 transition active:scale-95 shrink-0">
+                    <!-- INPUT FORM BAR -->
+                    <form onsubmit="handleSendMessage(event)" class="p-2.5 sm:p-3 bg-white border-t border-slate-200 flex items-center gap-2 shrink-0">
+                        <input type="text" id="messageInput" placeholder="Type message..." class="flex-1 bg-slate-100 border border-slate-200/90 focus:border-emerald-500 focus:bg-white rounded-2xl px-4 py-2.5 text-xs sm:text-sm text-slate-800 placeholder-slate-400 outline-none transition">
+                        <button type="submit" class="bg-emerald-600 hover:bg-emerald-500 text-white w-10 h-10 rounded-2xl flex items-center justify-center shadow-md shadow-emerald-600/20 active:scale-95 transition shrink-0">
                             <i class="fa-solid fa-paper-plane text-xs"></i>
                         </button>
                     </form>
@@ -207,7 +208,7 @@
 
     </div>
 
-    <!-- SCRIPT -->
+    <!-- APP SCRIPT LOGIC -->
     <script>
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyHhk4Eu4RPgy2dMrt4r4RxD7CI2lxDyHJsEinxYAPi-dJlNafCM97Jlkv-cbjbDxuwiA/exec";
         const TEACHER_PIN = "1998";
@@ -219,11 +220,14 @@
         let localStudents = [];
         let syncInterval = null;
 
-        const PREDEFINED_REPLIES = {
-            "syllabus": "📘 The exam syllabus covers Chapters 1 to 5. Review exercises at the end of each chapter.",
-            "assignment": "📝 Homework: Solve Problem Set 3 on page 42. Submission deadline is Friday 4:00 PM.",
-            "timings": "⏰ Class Timings: Monday to Friday, 9:00 AM to 2:30 PM.",
-            "notes": "📄 Printed chapter notes are available in the staff room or can be shared digitally."
+        // INDIAN MALE ASSAMESE TEACHER TONE - AUTO REPLIES
+        const TEACHER_REPLIES = {
+            "welcome": (name) => `Namaskar ${name}! Welcome to class chat portal. Subho prabhat! How are your studies going on? Ask me anytime if you have any doubt regarding lessons.`,
+            "syllabus": "Namaskar! For the upcoming exam, chapters 1 to 5 from your textbook are coming. Focus mainly on chapter exercises and core definitions, alright?",
+            "assignment": "Deu/Beta, complete exercise set 3 from page number 42. Submit your copy by Friday afternoon before class ends.",
+            "timings": "Class timing is daily 9:00 AM to 2:30 PM. I am available for personal doubt clearing after 3:00 PM.",
+            "notes": "Chapter notes summary copy is ready at school staff office. You can collect printed copy or request here for PDF version.",
+            "default": "Namaskar! Got your message. I am currently reviewing test papers. Will reply in detail shortly. Keep studying!"
         };
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -246,13 +250,13 @@
 
             if (role === 'student') {
                 tabStudent.className = "flex-1 py-2.5 text-xs font-semibold rounded-xl transition-all duration-200 bg-white text-emerald-700 shadow-sm";
-                tabTeacher.className = "flex-1 py-2.5 text-xs font-semibold rounded-xl transition-all duration-200 text-slate-500 hover:text-slate-800";
+                tabTeacher.className = "flex-1 py-2.5 text-xs font-semibold rounded-xl transition-all duration-200 text-slate-500";
                 nameGroup.classList.remove('hidden');
-                pinLabel.textContent = "4-Digit PIN";
+                pinLabel.textContent = "4-Digit Security PIN";
                 authNotice.classList.remove('hidden');
             } else {
                 tabTeacher.className = "flex-1 py-2.5 text-xs font-semibold rounded-xl transition-all duration-200 bg-white text-emerald-700 shadow-sm";
-                tabStudent.className = "flex-1 py-2.5 text-xs font-semibold rounded-xl transition-all duration-200 text-slate-500 hover:text-slate-800";
+                tabStudent.className = "flex-1 py-2.5 text-xs font-semibold rounded-xl transition-all duration-200 text-slate-500";
                 nameGroup.classList.add('hidden');
                 pinLabel.textContent = "Teacher Access PIN";
                 authNotice.classList.add('hidden');
@@ -275,7 +279,7 @@
 
             const name = document.getElementById('authName').value.trim();
             if (!name || pin.length < 4) {
-                alert("Please enter a valid Name and 4-Digit PIN.");
+                alert("Please enter full Name and 4-digit PIN.");
                 return;
             }
 
@@ -290,11 +294,33 @@
 
             currentUser = { name: name, role: "student" };
             saveUserAndLaunch();
+
+            // AUTOMATIC WELCOME MESSAGE FROM TEACHER FOR FIRST TIME REGISTRATION
+            sendWelcomeMessage(name);
         }
 
         function saveUserAndLaunch() {
             localStorage.setItem('school_chat_user', JSON.stringify(currentUser));
             initDashboard();
+        }
+
+        function sendWelcomeMessage(studentName) {
+            const welcomeMsgKey = `welcome_sent_${studentName}`;
+            if (!localStorage.getItem(welcomeMsgKey)) {
+                setTimeout(() => {
+                    const welcomeObj = {
+                        timestamp: new Date().toISOString(),
+                        sender: "Teacher",
+                        receiver: studentName,
+                        message: TEACHER_REPLIES["welcome"](studentName),
+                        senderRole: "teacher"
+                    };
+                    localMessages.push(welcomeObj);
+                    renderMessages();
+                    postMessageToSheet(welcomeObj);
+                    localStorage.setItem(welcomeMsgKey, "true");
+                }, 1000);
+            }
         }
 
         function initDashboard() {
@@ -310,17 +336,20 @@
 
             const teacherSidebar = document.getElementById('teacherSidebar');
             const predefinedChatBar = document.getElementById('predefinedChatBar');
+            const mobileBackBtn = document.getElementById('mobileBackBtn');
 
             if (currentUser.role === 'teacher') {
                 teacherSidebar.classList.remove('hidden');
                 predefinedChatBar.classList.add('hidden');
-                document.getElementById('chatHeaderTitle').textContent = "Select a Student";
-                document.getElementById('chatHeaderSubtitle').textContent = "Choose a student from the sidebar";
+                mobileBackBtn.classList.remove('hidden');
+                document.getElementById('chatHeaderTitle').textContent = "Select Student";
+                document.getElementById('chatHeaderSubtitle').textContent = "Tap student list on top left";
             } else {
                 teacherSidebar.classList.add('hidden');
                 predefinedChatBar.classList.remove('hidden');
+                mobileBackBtn.classList.add('hidden');
                 document.getElementById('chatHeaderTitle').textContent = "Teacher";
-                document.getElementById('chatHeaderSubtitle').textContent = "Direct message window";
+                document.getElementById('chatHeaderSubtitle').textContent = "Online | Direct Channel";
             }
 
             loadRemoteData();
@@ -329,7 +358,7 @@
         }
 
         function handleLogout() {
-            if (confirm("Are you sure you want to log out?")) {
+            if (confirm("Log out from portal?")) {
                 localStorage.removeItem('school_chat_user');
                 currentUser = null;
                 if (syncInterval) clearInterval(syncInterval);
@@ -353,7 +382,7 @@
                     }
                 }
 
-                updateSyncStatus('Synced');
+                updateSyncStatus('Connected');
                 renderMessages();
             } catch (err) {
                 updateSyncStatus('Offline');
@@ -366,19 +395,19 @@
             if (!container) return;
 
             if (localStudents.length === 0) {
-                container.innerHTML = `<div class="p-4 text-center text-xs text-slate-400">No registered students yet.</div>`;
+                container.innerHTML = `<div class="p-4 text-center text-xs text-slate-400">No students registered yet.</div>`;
                 return;
             }
 
             container.innerHTML = localStudents.map(student => {
                 const isActive = activeSelectedStudent === student.name;
                 return `
-                    <div onclick="selectStudent('${student.name}')" class="p-3 rounded-2xl cursor-pointer transition flex items-center justify-between ${isActive ? 'bg-emerald-600 text-white font-semibold shadow-md shadow-emerald-600/20' : 'bg-white hover:bg-emerald-50/60 text-slate-700 border border-slate-200/60'}">
+                    <div onclick="selectStudent('${student.name}')" class="p-3 rounded-xl cursor-pointer transition flex items-center justify-between ${isActive ? 'bg-emerald-600 text-white font-medium shadow-sm' : 'bg-slate-100 hover:bg-slate-200/80 text-slate-700'}">
                         <div class="flex items-center gap-2.5">
-                            <div class="w-8 h-8 rounded-xl ${isActive ? 'bg-white/20 text-white' : 'bg-emerald-50 text-emerald-600'} flex items-center justify-center text-xs">
+                            <div class="w-8 h-8 rounded-full ${isActive ? 'bg-white/20 text-white' : 'bg-emerald-100 text-emerald-700'} flex items-center justify-center text-xs">
                                 <i class="fa-solid fa-user-graduate"></i>
                             </div>
-                            <span class="text-xs truncate max-w-[130px]">${student.name}</span>
+                            <span class="text-xs font-semibold truncate max-w-[130px]">${student.name}</span>
                         </div>
                         <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
                     </div>
@@ -389,10 +418,33 @@
         function selectStudent(studentName) {
             activeSelectedStudent = studentName;
             document.getElementById('chatHeaderTitle').textContent = studentName;
-            document.getElementById('chatHeaderSubtitle').textContent = "Student Direct Line";
+            document.getElementById('chatHeaderSubtitle').textContent = "Student Chat History";
             document.getElementById('chatHeaderIcon').className = "fa-solid fa-user-graduate";
+            
+            // On mobile screen hide sidebar after selecting student
+            if (window.innerWidth < 640) {
+                document.getElementById('teacherSidebar').classList.add('hidden');
+            }
+
             renderStudentList();
             renderMessages();
+        }
+
+        // DATE & TIME FORMATTERS
+        function formatTime(isoString) {
+            if (!isoString) return "";
+            const date = new Date(isoString);
+            if (isNaN(date.getTime())) return "";
+            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+        }
+
+        function formatDateHeader(isoString) {
+            if (!isoString) return "";
+            const date = new Date(isoString);
+            if (isNaN(date.getTime())) return "";
+            const today = new Date();
+            if (date.toDateString() === today.toDateString()) return "Today";
+            return date.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
         }
 
         function renderMessages() {
@@ -406,9 +458,9 @@
             } else {
                 if (!activeSelectedStudent) {
                     container.innerHTML = `
-                        <div class="h-full flex flex-col items-center justify-center text-slate-400 text-xs">
+                        <div class="h-full flex flex-col items-center justify-center text-slate-400 text-xs text-center p-4">
                             <i class="fa-solid fa-comments text-3xl mb-2 text-slate-300"></i>
-                            Select a student from the sidebar to view messages.
+                            Select a student from top left button to read & send messages.
                         </div>
                     `;
                     return;
@@ -418,30 +470,50 @@
 
             if (filtered.length === 0) {
                 container.innerHTML = `
-                    <div class="h-full flex flex-col items-center justify-center text-slate-400 text-xs">
+                    <div class="h-full flex flex-col items-center justify-center text-slate-400 text-xs text-center p-4">
                         <i class="fa-regular fa-paper-plane text-2xl mb-2 text-slate-300"></i>
-                        No messages yet. Send a message to start!
+                        No chat history. Type your message below!
                     </div>
                 `;
                 return;
             }
 
-            container.innerHTML = filtered.map(m => {
+            let html = "";
+            let lastDateStr = "";
+
+            filtered.forEach(m => {
                 const isMe = m.sender === currentUser.name;
-                return `
-                    <div class="flex flex-col ${isMe ? 'items-end' : 'items-start'}">
-                        <div class="max-w-[80%] sm:max-w-[70%] rounded-2xl px-4 py-2.5 text-xs sm:text-sm leading-relaxed ${
+                const msgDateStr = formatDateHeader(m.timestamp);
+                const msgTimeStr = formatTime(m.timestamp);
+
+                // Insert Date Divider Header
+                if (msgDateStr && msgDateStr !== lastDateStr) {
+                    lastDateStr = msgDateStr;
+                    html += `
+                        <div class="flex justify-center my-2">
+                            <span class="bg-slate-200/80 text-slate-600 text-[10px] font-semibold px-2.5 py-0.5 rounded-full shadow-2xs">${msgDateStr}</span>
+                        </div>
+                    `;
+                }
+
+                html += `
+                    <div class="flex flex-col ${isMe ? 'items-end' : 'items-start'} my-1">
+                        <div class="max-w-[85%] sm:max-w-[75%] rounded-2xl px-3.5 py-2 text-xs sm:text-sm leading-snug ${
                             isMe 
-                            ? 'bg-emerald-600 text-white rounded-br-none shadow-sm' 
-                            : 'bg-white text-slate-800 border border-slate-200/80 rounded-bl-none shadow-sm'
+                            ? 'bg-emerald-600 text-white rounded-br-none shadow-xs' 
+                            : 'bg-white text-slate-800 border border-slate-200/80 rounded-bl-none shadow-xs'
                         }">
-                            <div class="text-[10px] font-semibold ${isMe ? 'text-emerald-100' : 'text-emerald-700'} mb-1">${m.sender}</div>
+                            <div class="text-[10px] font-bold ${isMe ? 'text-emerald-100' : 'text-emerald-700'} mb-0.5 flex justify-between gap-3">
+                                <span>${m.sender}</span>
+                            </div>
                             <div>${m.message}</div>
+                            <div class="text-[9px] text-right mt-1 opacity-70 font-medium">${msgTimeStr}</div>
                         </div>
                     </div>
                 `;
-            }).join('');
+            });
 
+            container.innerHTML = html;
             container.scrollTop = container.scrollHeight;
         }
 
@@ -452,7 +524,7 @@
             if (!text) return;
 
             if (currentUser.role === 'teacher' && !activeSelectedStudent) {
-                alert("Please select a student to message first.");
+                alert("Select a student to message first.");
                 return;
             }
 
@@ -479,10 +551,10 @@
 
         function sendPredefinedMessage(type) {
             let text = "";
-            if (type === 'Syllabus') text = "Can you share the exam syllabus?";
-            if (type === 'Assignment') text = "What is today's homework assignment?";
-            if (type === 'Timings') text = "What are the class timings?";
-            if (type === 'Notes') text = "Where can I get the chapter notes?";
+            if (type === 'Syllabus') text = "Respected Teacher, what is the syllabus for upcoming exam?";
+            if (type === 'Assignment') text = "Sir, what homework do we need to submit?";
+            if (type === 'Timings') text = "What are the school class timings?";
+            if (type === 'Notes') text = "Sir, could you share the chapter notes PDF?";
 
             document.getElementById('messageInput').value = text;
             handleSendMessage(new Event('submit'));
@@ -490,32 +562,30 @@
 
         function checkAndSendBotReply(studentMessage) {
             const msgLower = studentMessage.toLowerCase();
-            let botResponse = null;
+            let botResponse = TEACHER_REPLIES["default"];
 
             if (msgLower.includes('syllabus') || msgLower.includes('exam')) {
-                botResponse = PREDEFINED_REPLIES["syllabus"];
+                botResponse = TEACHER_REPLIES["syllabus"];
             } else if (msgLower.includes('assignment') || msgLower.includes('homework')) {
-                botResponse = PREDEFINED_REPLIES["assignment"];
+                botResponse = TEACHER_REPLIES["assignment"];
             } else if (msgLower.includes('timing') || msgLower.includes('time') || msgLower.includes('class')) {
-                botResponse = PREDEFINED_REPLIES["timings"];
+                botResponse = TEACHER_REPLIES["timings"];
             } else if (msgLower.includes('note') || msgLower.includes('pdf') || msgLower.includes('chapter')) {
-                botResponse = PREDEFINED_REPLIES["notes"];
+                botResponse = TEACHER_REPLIES["notes"];
             }
 
-            if (botResponse) {
-                setTimeout(() => {
-                    const replyObj = {
-                        timestamp: new Date().toISOString(),
-                        sender: "Teacher (Auto-Response)",
-                        receiver: currentUser.name,
-                        message: botResponse,
-                        senderRole: "teacher"
-                    };
-                    localMessages.push(replyObj);
-                    renderMessages();
-                    postMessageToSheet(replyObj);
-                }, 700);
-            }
+            setTimeout(() => {
+                const replyObj = {
+                    timestamp: new Date().toISOString(),
+                    sender: "Teacher",
+                    receiver: currentUser.name,
+                    message: botResponse,
+                    senderRole: "teacher"
+                };
+                localMessages.push(replyObj);
+                renderMessages();
+                postMessageToSheet(replyObj);
+            }, 1000);
         }
 
         function postMessageToSheet(msgData) {
@@ -532,7 +602,7 @@
                         message: msgData.message,
                         senderRole: msgData.senderRole
                     })
-                }).then(() => updateSyncStatus('Synced'))
+                }).then(() => updateSyncStatus('Connected'))
                   .catch(() => updateSyncStatus('Saved locally'));
             } catch (err) {
                 updateSyncStatus('Saved locally');
