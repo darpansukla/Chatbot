@@ -3,689 +3,550 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduChat Hub - Student & Teacher Portal</title>
-    <!-- Tailwind CSS CDN -->
+    <title>School Messaging Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: '#f0fdf4',
-                            100: '#dcfce7',
-                            500: '#22c55e',
-                            600: '#16a34a',
-                            700: '#15803d',
-                            800: '#166534',
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.05); }
-        ::-webkit-scrollbar-thumb { background: rgba(156, 163, 175, 0.5); border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(107, 114, 128, 0.8); }
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #f0fdf4 0%, #e6f4ea 50%, #f4fbf7 100%);
+        }
+        .apple-glass {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+        .apple-card {
+            background: #ffffff;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.05), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(241, 245, 249, 0.3);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 20px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
     </style>
 </head>
-<body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col transition-colors duration-200">
+<body class="text-slate-800 min-h-screen flex flex-col justify-center items-center p-2 sm:p-4 md:p-6 select-none overflow-x-hidden">
 
-    <!-- HEADER / NAVBAR -->
-    <header class="bg-white dark:bg-slate-800 shadow-sm border-b border-slate-200 dark:border-slate-700 sticky top-0 z-30">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="bg-brand-600 text-white p-2.5 rounded-xl flex items-center justify-center shadow-md">
-                    <i class="fa-solid fa-graduation-cap text-xl"></i>
-                </div>
-                <div>
-                    <h1 class="font-bold text-lg leading-tight text-slate-900 dark:text-white">EduChat Hub</h1>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">School Student & Teacher Portal</p>
-                </div>
-            </div>
+    <!-- APPLE LIGHT BACKGROUND BLUR ORBS -->
+    <div class="fixed top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-emerald-200/40 rounded-full blur-[130px] pointer-events-none"></div>
+    <div class="fixed bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-teal-200/30 rounded-full blur-[130px] pointer-events-none"></div>
 
-            <div class="flex items-center space-x-2 sm:space-x-3">
-                <!-- Sync Status Badge -->
-                <div id="syncStatus" class="flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span id="syncStatusText">Google Sheets Connected</span>
+    <!-- MAIN APP WRAPPER -->
+    <div class="w-full max-w-6xl h-[94vh] max-h-[860px] apple-glass rounded-[32px] shadow-2xl shadow-emerald-950/5 overflow-hidden flex flex-col relative z-10 transition-all duration-300">
+
+        <!-- AUTH SCREEN (LOGIN / REGISTER) -->
+        <div id="authScreen" class="flex-1 flex items-center justify-center p-4 sm:p-8">
+            <div class="w-full max-w-md apple-card p-8 rounded-[28px] relative overflow-hidden">
+                <div class="text-center mb-8">
+                    <div class="w-16 h-16 bg-emerald-500 text-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl shadow-emerald-500/25 transition-transform hover:scale-105 duration-200">
+                        <i class="fa-solid fa-graduation-cap text-2xl"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-slate-900 tracking-tight">School Portal</h2>
+                    <p class="text-xs font-medium text-slate-500 mt-1">Connect directly with your Teacher</p>
                 </div>
 
-                <!-- Web App Settings Trigger -->
-                <button onclick="openModal('settingsModal')" class="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition" title="Backend Integration Config">
-                    <i class="fa-solid fa-gear text-lg"></i>
-                </button>
-
-                <!-- Dark Mode Toggle -->
-                <button id="themeToggle" onclick="toggleDarkMode()" class="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition" title="Toggle Theme">
-                    <i class="fa-solid fa-moon text-lg dark:hidden"></i>
-                    <i class="fa-solid fa-sun text-lg hidden dark:inline"></i>
-                </button>
-
-                <!-- User Profile / Logout -->
-                <div id="userInfoHeader" class="hidden flex items-center space-x-2 border-l border-slate-200 dark:border-slate-700 pl-3">
-                    <span id="headerUserName" class="text-sm font-semibold hidden md:inline text-slate-700 dark:text-slate-200"></span>
-                    <button onclick="logout()" class="px-3 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 dark:bg-rose-950/40 dark:hover:bg-rose-900/60 dark:text-rose-300 text-xs font-semibold transition">
-                        <i class="fa-solid fa-right-from-bracket mr-1"></i> Logout
+                <!-- Role Selector Tabs -->
+                <div class="flex bg-slate-100 p-1 rounded-2xl mb-6 border border-slate-200/60">
+                    <button id="tabStudent" onclick="switchAuthTab('student')" class="flex-1 py-2.5 text-xs font-semibold rounded-xl transition-all duration-200 bg-white text-emerald-700 shadow-sm">
+                        <i class="fa-solid fa-user-graduate mr-1.5"></i> Student
                     </button>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- MAIN APPLICATION CONTAINER -->
-    <main class="flex-1 max-w-7xl w-full mx-auto p-2 sm:p-4 md:p-6 flex flex-col">
-
-        <!-- AUTHENTICATION SCREEN -->
-        <div id="authScreen" class="flex-1 flex items-center justify-center py-6">
-            <div class="w-full max-w-md bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
-                <div class="flex border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50">
-                    <button id="tabStudentBtn" onclick="switchAuthTab('student')" class="flex-1 py-3.5 text-center text-sm font-semibold border-b-2 border-brand-600 text-brand-600 dark:text-brand-400">
-                        <i class="fa-solid fa-user-graduate mr-2"></i> Student Access
-                    </button>
-                    <button id="tabTeacherBtn" onclick="switchAuthTab('teacher')" class="flex-1 py-3.5 text-center text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200">
-                        <i class="fa-solid fa-chalkboard-user mr-2"></i> Teacher / Admin
+                    <button id="tabTeacher" onclick="switchAuthTab('teacher')" class="flex-1 py-2.5 text-xs font-semibold rounded-xl transition-all duration-200 text-slate-500 hover:text-slate-800">
+                        <i class="fa-solid fa-chalkboard-user mr-1.5"></i> Teacher
                     </button>
                 </div>
 
-                <div class="p-6">
-                    <!-- STUDENT LOGIN FORM -->
-                    <div id="studentAuthForm" class="space-y-4">
-                        <div class="text-center mb-4">
-                            <h2 class="text-xl font-bold text-slate-800 dark:text-white">Student Access</h2>
-                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Enter your name and 4-digit PIN to join or enter standard chat.</p>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">Full Name</label>
-                            <div class="relative">
-                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400"><i class="fa-solid fa-user"></i></span>
-                                <input type="text" id="studentName" placeholder="e.g. Rahul Sharma" class="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm transition">
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">4-Digit PIN</label>
-                            <div class="relative">
-                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400"><i class="fa-solid fa-key"></i></span>
-                                <input type="password" id="studentPin" maxlength="4" placeholder="••••" class="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm tracking-widest transition">
-                            </div>
-                        </div>
-
-                        <button onclick="handleStudentAuth()" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl shadow-lg shadow-brand-500/20 transition flex items-center justify-center space-x-2">
-                            <span>Start Chatting</span>
-                            <i class="fa-solid fa-arrow-right text-xs"></i>
-                        </button>
-                    </div>
-
-                    <!-- TEACHER / ADMIN FORM -->
-                    <div id="teacherAuthForm" class="space-y-4 hidden">
-                        <div class="text-center mb-4">
-                            <h2 class="text-xl font-bold text-slate-800 dark:text-white">Teacher Admin Portal</h2>
-                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Access dashboard to respond to student questions.</p>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">Admin Passcode / PIN</label>
-                            <div class="relative">
-                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400"><i class="fa-solid fa-shield-halved"></i></span>
-                                <input type="password" id="teacherPin" placeholder="Default PIN: 9999 or 1234" class="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm tracking-widest transition">
-                            </div>
-                            <p class="text-[11px] text-slate-400 mt-1">Admin PINs: <code class="bg-slate-200 dark:bg-slate-700 px-1 py-0.5 rounded text-slate-700 dark:text-slate-300">9999</code> or <code class="bg-slate-200 dark:bg-slate-700 px-1 py-0.5 rounded text-slate-700 dark:text-slate-300">1234</code></p>
-                        </div>
-
-                        <button onclick="handleTeacherAuth()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-lg shadow-indigo-500/20 transition flex items-center justify-center space-x-2">
-                            <span>Access Dashboard</span>
-                            <i class="fa-solid fa-lock-open text-xs"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- CHAT WORKSPACE -->
-        <div id="chatWorkspace" class="hidden flex-1 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col md:flex-row min-h-[550px] max-h-[85vh]">
-            
-            <!-- SIDEBAR -->
-            <div id="chatSidebar" class="w-full md:w-80 border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-700 flex flex-col bg-slate-50 dark:bg-slate-800/60">
-                <div class="p-3.5 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between bg-white dark:bg-slate-800">
-                    <h3 class="font-bold text-sm text-slate-800 dark:text-slate-200 flex items-center gap-2">
-                        <i class="fa-solid fa-users text-brand-600"></i>
-                        <span id="sidebarTitle">Directory</span>
-                    </h3>
-                    <div class="flex items-center space-x-1">
-                        <button onclick="syncDataWithBackend()" class="p-1.5 text-slate-500 hover:text-brand-600 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition" title="Refresh Sync">
-                            <i class="fa-solid fa-rotate text-sm"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Search Input for Teacher -->
-                <div id="searchBoxContainer" class="p-2.5 border-b border-slate-200 dark:border-slate-700">
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400"><i class="fa-solid fa-magnifying-glass text-xs"></i></span>
-                        <input type="text" id="searchStudentInput" oninput="renderStudentList()" placeholder="Search students..." class="w-full pl-8 pr-3 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-xs focus:ring-1 focus:ring-brand-500 focus:outline-none">
-                    </div>
-                </div>
-
-                <div id="studentListContainer" class="flex-1 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-700/50">
-                    <!-- Dynamic rendering -->
-                </div>
-            </div>
-
-            <!-- CHAT MAIN WINDOW -->
-            <div class="flex-1 flex flex-col bg-white dark:bg-slate-800">
-                <!-- Chat Window Header -->
-                <div class="p-3.5 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between bg-white dark:bg-slate-800 shadow-sm">
-                    <div class="flex items-center space-x-3">
+                <!-- Form -->
+                <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
+                    <div id="nameGroup">
+                        <label class="block text-xs font-semibold text-slate-600 mb-1.5 ml-1">Full Name</label>
                         <div class="relative">
-                            <div id="chatAvatar" class="w-10 h-10 rounded-full bg-brand-100 text-brand-700 font-bold flex items-center justify-center text-base border border-brand-200">
-                                S
-                            </div>
-                            <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white dark:border-slate-800 rounded-full"></span>
+                            <i class="fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                            <input type="text" id="authName" placeholder="Enter your full name" class="w-full bg-slate-50/80 border border-slate-200 focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 rounded-2xl pl-11 pr-4 py-3 text-xs sm:text-sm text-slate-800 placeholder-slate-400 outline-none transition duration-200">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label id="pinLabel" class="block text-xs font-semibold text-slate-600 mb-1.5 ml-1">4-Digit PIN</label>
+                        <div class="relative">
+                            <i class="fa-solid fa-key absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                            <input type="password" id="authPin" maxlength="4" placeholder="••••" class="w-full bg-slate-50/80 border border-slate-200 focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 rounded-2xl pl-11 pr-4 py-3 text-xs sm:text-sm text-slate-800 placeholder-slate-400 outline-none tracking-widest transition duration-200">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-3.5 rounded-2xl shadow-lg shadow-emerald-600/20 active:scale-[0.98] transition duration-200 text-xs sm:text-sm mt-3 flex items-center justify-center gap-2">
+                        <span>Continue</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
+                </form>
+
+                <div id="authNotice" class="mt-4 text-center text-[11px] text-slate-400 font-medium">
+                    New students are automatically registered on first sign-in.
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN DASHBOARD -->
+        <div id="mainDashboard" class="flex-1 flex flex-col hidden h-full overflow-hidden">
+            
+            <!-- TOP NAVBAR -->
+            <header class="h-16 border-b border-slate-200/80 bg-white/70 px-4 sm:px-6 flex items-center justify-between backdrop-blur-xl">
+                
+                <!-- LEFT HAND SIDE: BIG SHUTDOWN / LOGOUT BUTTON -->
+                <div class="flex items-center gap-3">
+                    <button onclick="handleLogout()" title="Log Out" class="w-11 h-11 rounded-2xl bg-red-50 hover:bg-red-500 hover:text-white border border-red-200/80 text-red-500 flex items-center justify-center shadow-sm transition-all duration-200 active:scale-90 group shrink-0">
+                        <i class="fa-solid fa-power-off text-lg group-hover:rotate-12 transition-transform duration-200"></i>
+                    </button>
+                    <div class="h-6 w-[1px] bg-slate-200"></div>
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center text-emerald-600">
+                            <i id="navRoleIcon" class="fa-solid fa-user-graduate text-xs"></i>
                         </div>
                         <div>
-                            <h3 id="chatHeaderName" class="font-bold text-sm text-slate-800 dark:text-slate-100">Select Conversation</h3>
-                            <p id="chatHeaderSub" class="text-xs text-slate-400">Direct Support Channel</p>
+                            <h1 id="navUserName" class="text-xs sm:text-sm font-bold text-slate-900 leading-none">User Name</h1>
+                            <p id="navUserRole" class="text-[10px] font-medium text-slate-500 mt-1 flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span>
+                                Student
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT SIDE: STATUS -->
+                <div id="syncBadge" class="px-3 py-1 rounded-full bg-slate-100/80 border border-slate-200/60 text-[11px] font-medium text-slate-500 flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span id="syncText">Synced</span>
+                </div>
+            </header>
+
+            <!-- CHAT WORKSPACE BODY -->
+            <div class="flex-1 flex overflow-hidden relative">
+
+                <!-- SIDEBAR (FOR TEACHER TO SELECT STUDENTS) -->
+                <aside id="teacherSidebar" class="w-full sm:w-72 md:w-80 border-r border-slate-200/80 bg-slate-50/50 flex flex-col hidden sm:flex">
+                    <div class="p-3.5 border-b border-slate-200/80 bg-white/50 flex items-center justify-between">
+                        <span class="text-xs font-bold text-slate-600 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-users text-emerald-600"></i> Students List
+                        </span>
+                        <button onclick="loadRemoteData()" title="Refresh" class="text-slate-400 hover:text-slate-700 text-xs p-1">
+                            <i class="fa-solid fa-rotate"></i>
+                        </button>
+                    </div>
+
+                    <div id="studentListContainer" class="flex-1 overflow-y-auto custom-scrollbar p-2.5 space-y-1.5">
+                        <!-- Student Item Template -->
+                    </div>
+                </aside>
+
+                <!-- CHAT PANEL -->
+                <main class="flex-1 flex flex-col bg-white/40 relative">
+                    
+                    <!-- Chat Header -->
+                    <div id="chatHeader" class="p-3.5 px-4 sm:px-6 border-b border-slate-200/80 bg-white/60 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <button id="mobileBackBtn" onclick="toggleMobileSidebar()" class="sm:hidden text-slate-500 hover:text-slate-800 mr-1 hidden">
+                                <i class="fa-solid fa-arrow-left"></i>
+                            </button>
+                            <div class="w-9 h-9 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm font-semibold border border-emerald-200/60">
+                                <i id="chatHeaderIcon" class="fa-solid fa-chalkboard-user"></i>
+                            </div>
+                            <div>
+                                <h3 id="chatHeaderTitle" class="text-xs sm:text-sm font-bold text-slate-900">Teacher</h3>
+                                <p id="chatHeaderSubtitle" class="text-[10px] text-slate-500 font-medium">Direct messages</p>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Quick Auto-Reply Chips for Students -->
-                    <div id="quickReplyContainer" class="hidden md:flex items-center space-x-2 overflow-x-auto max-w-md py-1">
-                        <span class="text-[11px] font-semibold text-slate-400 whitespace-nowrap"><i class="fa-solid fa-bolt text-amber-500 mr-1"></i>Quick Ask:</span>
-                        <button onclick="sendQuickReply('Assignment Deadline')" class="text-xs px-2.5 py-1 bg-slate-100 hover:bg-brand-50 hover:text-brand-600 dark:bg-slate-700 dark:hover:bg-slate-600 rounded-full text-slate-600 dark:text-slate-300 transition whitespace-nowrap">📅 Homework</button>
-                        <button onclick="sendQuickReply('Class Schedule')" class="text-xs px-2.5 py-1 bg-slate-100 hover:bg-brand-50 hover:text-brand-600 dark:bg-slate-700 dark:hover:bg-slate-600 rounded-full text-slate-600 dark:text-slate-300 transition whitespace-nowrap">⏰ Timetable</button>
-                        <button onclick="sendQuickReply('Exam Syllabus')" class="text-xs px-2.5 py-1 bg-slate-100 hover:bg-brand-50 hover:text-brand-600 dark:bg-slate-700 dark:hover:bg-slate-600 rounded-full text-slate-600 dark:text-slate-300 transition whitespace-nowrap">📚 Syllabus</button>
+                    <!-- Messages Display -->
+                    <div id="messagesContainer" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-3.5 custom-scrollbar">
+                        <!-- Chat history renders here -->
                     </div>
-                </div>
 
-                <!-- Messages Stream -->
-                <div id="messagesContainer" class="flex-1 p-4 overflow-y-auto space-y-3 bg-slate-50/50 dark:bg-slate-900/50">
-                    <!-- Messages rendered dynamically -->
-                </div>
+                    <!-- PREDEFINED QUICK ASK BAR (FOR STUDENTS) -->
+                    <div id="predefinedChatBar" class="p-2 sm:p-2.5 px-4 border-t border-slate-200/60 bg-white/80 overflow-x-auto flex items-center gap-2 custom-scrollbar">
+                        <span class="text-[11px] font-bold text-emerald-700 whitespace-nowrap flex items-center gap-1 mr-1">
+                            <i class="fa-solid fa-bolt"></i> Quick Ask:
+                        </span>
+                        <button onclick="sendPredefinedMessage('Syllabus')" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-emerald-50 hover:border-emerald-300 border border-slate-200 text-slate-700 hover:text-emerald-700 text-xs font-medium transition duration-150 whitespace-nowrap active:scale-95 shadow-sm">
+                            📚 Exam Syllabus
+                        </button>
+                        <button onclick="sendPredefinedMessage('Assignment')" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-emerald-50 hover:border-emerald-300 border border-slate-200 text-slate-700 hover:text-emerald-700 text-xs font-medium transition duration-150 whitespace-nowrap active:scale-95 shadow-sm">
+                            📝 Homework Assignment
+                        </button>
+                        <button onclick="sendPredefinedMessage('Timings')" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-emerald-50 hover:border-emerald-300 border border-slate-200 text-slate-700 hover:text-emerald-700 text-xs font-medium transition duration-150 whitespace-nowrap active:scale-95 shadow-sm">
+                            ⏰ Class Timings
+                        </button>
+                        <button onclick="sendPredefinedMessage('Notes')" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-emerald-50 hover:border-emerald-300 border border-slate-200 text-slate-700 hover:text-emerald-700 text-xs font-medium transition duration-150 whitespace-nowrap active:scale-95 shadow-sm">
+                            📄 Chapter Notes
+                        </button>
+                    </div>
 
-                <!-- Chat Input Controls -->
-                <div class="p-3 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
-                    <form onsubmit="handleSendMessage(event)" class="flex items-center space-x-2">
-                        <input type="text" id="messageInput" placeholder="Type your message here..." class="flex-1 py-2.5 px-4 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm transition">
-                        <button type="submit" class="px-4 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl transition shadow-md flex items-center justify-center">
-                            <i class="fa-solid fa-paper-plane mr-1 text-xs"></i> Send
+                    <!-- Input Box -->
+                    <form onsubmit="handleSendMessage(event)" class="p-3 sm:p-4 bg-white/90 border-t border-slate-200/80 flex items-center gap-2">
+                        <input type="text" id="messageInput" placeholder="Type your message here..." class="flex-1 bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 rounded-2xl px-4 py-3 text-xs sm:text-sm text-slate-800 placeholder-slate-400 outline-none transition duration-200">
+                        <button type="submit" class="bg-emerald-600 hover:bg-emerald-500 text-white w-11 h-11 rounded-2xl flex items-center justify-center shadow-md shadow-emerald-600/20 transition active:scale-95 shrink-0">
+                            <i class="fa-solid fa-paper-plane text-xs"></i>
                         </button>
                     </form>
-                </div>
-            </div>
-        </div>
-    </main>
 
-    <!-- SETTINGS MODAL -->
-    <div id="settingsModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-700">
-            <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-700">
-                <h3 class="font-bold text-base text-slate-800 dark:text-slate-100 flex items-center gap-2">
-                    <i class="fa-solid fa-gear text-brand-600"></i> Backend Settings
-                </h3>
-                <button onclick="closeModal('settingsModal')" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div class="mt-4 space-y-3 text-xs">
-                <label class="block font-semibold text-slate-700 dark:text-slate-200">Google Apps Script Executable URL</label>
-                <input type="text" id="webAppUrlInput" class="w-full p-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl font-mono text-[11px] focus:ring-2 focus:ring-brand-500 focus:outline-none">
-                <div class="flex justify-end space-x-2 pt-3">
-                    <button onclick="saveAppsScriptUrl()" class="px-4 py-2 bg-brand-600 text-white font-semibold rounded-lg hover:bg-brand-700 transition">Save & Test Connection</button>
-                </div>
+                </main>
             </div>
         </div>
+
     </div>
 
-    <!-- TOAST NOTIFICATION -->
-    <div id="toast" class="fixed bottom-5 right-5 z-50 transition-all duration-300 opacity-0 pointer-events-none transform translate-y-2">
-        <div class="bg-slate-800 text-white px-4 py-2.5 rounded-xl shadow-xl flex items-center space-x-2 text-xs border border-slate-700">
-            <span id="toastIcon" class="text-brand-400"><i class="fa-solid fa-circle-check"></i></span>
-            <span id="toastMessage">Notification message</span>
-        </div>
-    </div>
-
-    <!-- MAIN JAVASCRIPT LOGIC -->
+    <!-- SCRIPT -->
     <script>
-        // CONFIG & BACKEND URL
-        let webAppUrl = localStorage.getItem("educhat_webapp_url") || "https://script.google.com/macros/s/AKfycbyHhk4Eu4RPgy2dMrt4r4RxD7CI2lxDyHJsEinxYAPi-dJlNafCM97Jlkv-cbjbDxuwiA/exec";
-        const ADMIN_PINS = ["9999", "1234"];
-        const BOT_NAME = "EduBot";
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyHhk4Eu4RPgy2dMrt4r4RxD7CI2lxDyHJsEinxYAPi-dJlNafCM97Jlkv-cbjbDxuwiA/exec";
+        const TEACHER_PIN = "1998";
 
-        // STATE
-        let currentUser = JSON.parse(localStorage.getItem("educhat_active_user")) || null;
-        let selectedStudent = null;
+        let currentUser = null;
+        let currentAuthRole = "student";
+        let activeSelectedStudent = null;
+        let localMessages = [];
+        let localStudents = [];
+        let syncInterval = null;
 
-        let students = JSON.parse(localStorage.getItem("educhat_students")) || [
-            { name: "Rahul Sharma", role: "Student" },
-            { name: "Ananya Patel", role: "Student" }
-        ];
+        const PREDEFINED_REPLIES = {
+            "syllabus": "📘 The exam syllabus covers Chapters 1 to 5. Review exercises at the end of each chapter.",
+            "assignment": "📝 Homework: Solve Problem Set 3 on page 42. Submission deadline is Friday 4:00 PM.",
+            "timings": "⏰ Class Timings: Monday to Friday, 9:00 AM to 2:30 PM.",
+            "notes": "📄 Printed chapter notes are available in the staff room or can be shared digitally."
+        };
 
-        let messages = JSON.parse(localStorage.getItem("educhat_messages")) || [
-            { sender: "EduBot", receiver: "Rahul Sharma", message: "Welcome to EduChat Hub! Ask about 'syllabus', 'assignment', or 'schedule' for automatic replies.", timestamp: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}), senderRole: "Bot" }
-        ];
-
-        // BOT KNOWLEDGE BASE
-        const autoBotReplies = [
-            { keywords: ["assignment", "homework", "project", "submit"], response: "📌 Assignment Notice: Science project is due on Friday at 5 PM." },
-            { keywords: ["schedule", "time", "timetable", "class"], response: "⏰ Timetable: Regular classes run from 8:30 AM to 2:30 PM." },
-            { keywords: ["syllabus", "exam", "test", "portion"], response: "📚 Exam Syllabus: Mid-term covers Chapters 1 through 5 in Math & Science." },
-            { keywords: ["hello", "hi", "hey", "help", "teacher"], response: "👋 Hello! I am EduBot. Your query has been logged for the teacher, feel free to leave details." },
-            { keywords: ["thank", "thanks"], response: "😊 You're welcome! Happy learning!" }
-        ];
-
-        // INITIALIZATION
-        window.addEventListener("DOMContentLoaded", () => {
-            initTheme();
-            document.getElementById("webAppUrlInput").value = webAppUrl;
-
-            // Check persistent session
-            if (currentUser) {
-                enterChatWorkspace();
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedUser = localStorage.getItem('school_chat_user');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                initDashboard();
+            } else {
+                switchAuthTab('student');
             }
-
-            // Sync with backend immediately
-            syncDataWithBackend();
-
-            // Set up poll timer every 10 seconds for real-time messages
-            setInterval(syncDataWithBackend, 10000);
         });
 
-        // AUTHENTICATION TAB TOGGLE
-        function switchAuthTab(type) {
-            const studentBtn = document.getElementById("tabStudentBtn");
-            const teacherBtn = document.getElementById("tabTeacherBtn");
-            const studentForm = document.getElementById("studentAuthForm");
-            const teacherForm = document.getElementById("teacherAuthForm");
+        function switchAuthTab(role) {
+            currentAuthRole = role;
+            const tabStudent = document.getElementById('tabStudent');
+            const tabTeacher = document.getElementById('tabTeacher');
+            const nameGroup = document.getElementById('nameGroup');
+            const pinLabel = document.getElementById('pinLabel');
+            const authNotice = document.getElementById('authNotice');
 
-            if (type === 'student') {
-                studentBtn.className = "flex-1 py-3.5 text-center text-sm font-semibold border-b-2 border-brand-600 text-brand-600 dark:text-brand-400";
-                teacherBtn.className = "flex-1 py-3.5 text-center text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200";
-                studentForm.classList.remove("hidden");
-                teacherForm.classList.add("hidden");
+            if (role === 'student') {
+                tabStudent.className = "flex-1 py-2.5 text-xs font-semibold rounded-xl transition-all duration-200 bg-white text-emerald-700 shadow-sm";
+                tabTeacher.className = "flex-1 py-2.5 text-xs font-semibold rounded-xl transition-all duration-200 text-slate-500 hover:text-slate-800";
+                nameGroup.classList.remove('hidden');
+                pinLabel.textContent = "4-Digit PIN";
+                authNotice.classList.remove('hidden');
             } else {
-                teacherBtn.className = "flex-1 py-3.5 text-center text-sm font-semibold border-b-2 border-brand-600 text-brand-600 dark:text-brand-400";
-                studentBtn.className = "flex-1 py-3.5 text-center text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200";
-                teacherForm.classList.remove("hidden");
-                studentForm.classList.add("hidden");
+                tabTeacher.className = "flex-1 py-2.5 text-xs font-semibold rounded-xl transition-all duration-200 bg-white text-emerald-700 shadow-sm";
+                tabStudent.className = "flex-1 py-2.5 text-xs font-semibold rounded-xl transition-all duration-200 text-slate-500 hover:text-slate-800";
+                nameGroup.classList.add('hidden');
+                pinLabel.textContent = "Teacher Access PIN";
+                authNotice.classList.add('hidden');
             }
         }
 
-        // STUDENT REGISTRATION / LOGIN
-        async function handleStudentAuth() {
-            const nameInput = document.getElementById("studentName").value.trim();
-            const pinInput = document.getElementById("studentPin").value.trim();
+        async function handleAuthSubmit(e) {
+            e.preventDefault();
+            const pin = document.getElementById('authPin').value.trim();
 
-            if (!nameInput || pinInput.length !== 4) {
-                showToast("Please enter a valid Name and 4-digit PIN", "error");
-                return;
-            }
-
-            currentUser = { name: nameInput, role: 'Student', pin: pinInput };
-            localStorage.setItem("educhat_active_user", JSON.stringify(currentUser));
-
-            // Sync registration to Apps Script backend
-            saveRemoteStudent(nameInput, pinInput);
-
-            enterChatWorkspace();
-            showToast(`Welcome ${nameInput}!`);
-        }
-
-        // TEACHER / ADMIN AUTHENTICATION
-        function handleTeacherAuth() {
-            const pinInput = document.getElementById("teacherPin").value.trim();
-            if (!ADMIN_PINS.includes(pinInput)) {
-                showToast("Invalid Admin PIN! (Use 9999 or 1234)", "error");
-                return;
-            }
-
-            currentUser = { name: "Teacher/Admin", role: 'Teacher' };
-            localStorage.setItem("educhat_active_user", JSON.stringify(currentUser));
-
-            enterChatWorkspace();
-            showToast("Logged in as Admin");
-        }
-
-        // ENTER MAIN CHAT VIEW
-        function enterChatWorkspace() {
-            document.getElementById("authScreen").classList.add("hidden");
-            document.getElementById("chatWorkspace").classList.remove("hidden");
-            document.getElementById("userInfoHeader").classList.remove("hidden");
-            document.getElementById("headerUserName").textContent = currentUser.name + ` (${currentUser.role})`;
-
-            if (currentUser.role === 'Teacher') {
-                document.getElementById("quickReplyContainer").classList.add("hidden");
-                document.getElementById("searchBoxContainer").classList.remove("hidden");
-                document.getElementById("sidebarTitle").textContent = "Students List";
-                if (students.length > 0) {
-                    selectedStudent = students[0].name;
+            if (currentAuthRole === 'teacher') {
+                if (pin === TEACHER_PIN) {
+                    currentUser = { name: "Teacher", role: "teacher" };
+                    saveUserAndLaunch();
+                } else {
+                    alert("Incorrect Teacher PIN.");
                 }
-            } else {
-                document.getElementById("quickReplyContainer").classList.remove("hidden");
-                document.getElementById("searchBoxContainer").classList.add("hidden");
-                document.getElementById("sidebarTitle").textContent = "My Channel";
-                selectedStudent = currentUser.name;
+                return;
             }
 
+            const name = document.getElementById('authName').value.trim();
+            if (!name || pin.length < 4) {
+                alert("Please enter a valid Name and 4-Digit PIN.");
+                return;
+            }
+
+            try {
+                fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: "register", name: name, pin: pin })
+                });
+            } catch (err) {}
+
+            currentUser = { name: name, role: "student" };
+            saveUserAndLaunch();
+        }
+
+        function saveUserAndLaunch() {
+            localStorage.setItem('school_chat_user', JSON.stringify(currentUser));
+            initDashboard();
+        }
+
+        function initDashboard() {
+            document.getElementById('authScreen').classList.add('hidden');
+            document.getElementById('mainDashboard').classList.remove('hidden');
+
+            document.getElementById('navUserName').textContent = currentUser.name;
+            document.getElementById('navUserRole').innerHTML = currentUser.role === 'teacher' 
+                ? '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span> Teacher'
+                : '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span> Student';
+
+            document.getElementById('navRoleIcon').className = currentUser.role === 'teacher' ? 'fa-solid fa-chalkboard-user' : 'fa-solid fa-user-graduate';
+
+            const teacherSidebar = document.getElementById('teacherSidebar');
+            const predefinedChatBar = document.getElementById('predefinedChatBar');
+
+            if (currentUser.role === 'teacher') {
+                teacherSidebar.classList.remove('hidden');
+                predefinedChatBar.classList.add('hidden');
+                document.getElementById('chatHeaderTitle').textContent = "Select a Student";
+                document.getElementById('chatHeaderSubtitle').textContent = "Choose a student from the sidebar";
+            } else {
+                teacherSidebar.classList.add('hidden');
+                predefinedChatBar.classList.remove('hidden');
+                document.getElementById('chatHeaderTitle').textContent = "Teacher";
+                document.getElementById('chatHeaderSubtitle').textContent = "Direct message window";
+            }
+
+            loadRemoteData();
+            if (syncInterval) clearInterval(syncInterval);
+            syncInterval = setInterval(loadRemoteData, 5000);
+        }
+
+        function handleLogout() {
+            if (confirm("Are you sure you want to log out?")) {
+                localStorage.removeItem('school_chat_user');
+                currentUser = null;
+                if (syncInterval) clearInterval(syncInterval);
+                location.reload();
+            }
+        }
+
+        async function loadRemoteData() {
+            updateSyncStatus('Syncing...');
+            try {
+                const resMsgs = await fetch(`${APPS_SCRIPT_URL}?action=getMessages`);
+                const msgsData = await resMsgs.json();
+                if (Array.isArray(msgsData)) localMessages = msgsData;
+
+                if (currentUser.role === 'teacher') {
+                    const resUsers = await fetch(`${APPS_SCRIPT_URL}?action=getUsers`);
+                    const usersData = await resUsers.json();
+                    if (Array.isArray(usersData)) {
+                        localStudents = usersData.filter(u => u.role !== 'Teacher');
+                        renderStudentList();
+                    }
+                }
+
+                updateSyncStatus('Synced');
+                renderMessages();
+            } catch (err) {
+                updateSyncStatus('Offline');
+                renderMessages();
+            }
+        }
+
+        function renderStudentList() {
+            const container = document.getElementById('studentListContainer');
+            if (!container) return;
+
+            if (localStudents.length === 0) {
+                container.innerHTML = `<div class="p-4 text-center text-xs text-slate-400">No registered students yet.</div>`;
+                return;
+            }
+
+            container.innerHTML = localStudents.map(student => {
+                const isActive = activeSelectedStudent === student.name;
+                return `
+                    <div onclick="selectStudent('${student.name}')" class="p-3 rounded-2xl cursor-pointer transition flex items-center justify-between ${isActive ? 'bg-emerald-600 text-white font-semibold shadow-md shadow-emerald-600/20' : 'bg-white hover:bg-emerald-50/60 text-slate-700 border border-slate-200/60'}">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-xl ${isActive ? 'bg-white/20 text-white' : 'bg-emerald-50 text-emerald-600'} flex items-center justify-center text-xs">
+                                <i class="fa-solid fa-user-graduate"></i>
+                            </div>
+                            <span class="text-xs truncate max-w-[130px]">${student.name}</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function selectStudent(studentName) {
+            activeSelectedStudent = studentName;
+            document.getElementById('chatHeaderTitle').textContent = studentName;
+            document.getElementById('chatHeaderSubtitle').textContent = "Student Direct Line";
+            document.getElementById('chatHeaderIcon').className = "fa-solid fa-user-graduate";
             renderStudentList();
             renderMessages();
         }
 
-        // LOGOUT
-        function logout() {
-            currentUser = null;
-            selectedStudent = null;
-            localStorage.removeItem("educhat_active_user");
-            document.getElementById("authScreen").classList.remove("hidden");
-            document.getElementById("chatWorkspace").classList.add("hidden");
-            document.getElementById("userInfoHeader").classList.add("hidden");
-        }
+        function renderMessages() {
+            const container = document.getElementById('messagesContainer');
+            if (!container) return;
 
-        // RENDER SIDEBAR LIST
-        function renderStudentList() {
-            const container = document.getElementById("studentListContainer");
-            const filter = document.getElementById("searchStudentInput") ? document.getElementById("searchStudentInput").value.toLowerCase() : "";
-            container.innerHTML = "";
+            let filtered = [];
 
-            if (currentUser.role === 'Student') {
-                container.innerHTML = `
-                    <div onclick="selectChatTarget('${currentUser.name}')" class="p-3 flex items-center space-x-3 cursor-pointer bg-brand-50/50 dark:bg-brand-950/30 border-l-4 border-brand-600">
-                        <div class="w-9 h-9 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-xs">T</div>
-                        <div class="flex-1 min-w-0">
-                            <h4 class="font-semibold text-xs text-slate-800 dark:text-slate-100">Teacher / Helpdesk</h4>
-                            <p class="text-[11px] text-slate-400 truncate">1-on-1 direct help channel</p>
+            if (currentUser.role === 'student') {
+                filtered = localMessages.filter(m => m.sender === currentUser.name || m.receiver === currentUser.name);
+            } else {
+                if (!activeSelectedStudent) {
+                    container.innerHTML = `
+                        <div class="h-full flex flex-col items-center justify-center text-slate-400 text-xs">
+                            <i class="fa-solid fa-comments text-3xl mb-2 text-slate-300"></i>
+                            Select a student from the sidebar to view messages.
                         </div>
-                    </div>
-                `;
-                return;
+                    `;
+                    return;
+                }
+                filtered = localMessages.filter(m => m.sender === activeSelectedStudent || m.receiver === activeSelectedStudent);
             }
-
-            // Teacher view: Render registered students
-            const filtered = students.filter(s => s.name.toLowerCase().includes(filter));
 
             if (filtered.length === 0) {
-                container.innerHTML = `<div class="p-4 text-center text-xs text-slate-400">No students registered yet</div>`;
+                container.innerHTML = `
+                    <div class="h-full flex flex-col items-center justify-center text-slate-400 text-xs">
+                        <i class="fa-regular fa-paper-plane text-2xl mb-2 text-slate-300"></i>
+                        No messages yet. Send a message to start!
+                    </div>
+                `;
                 return;
             }
 
-            filtered.forEach(student => {
-                const isSelected = selectedStudent === student.name;
-                const activeClass = isSelected 
-                    ? "bg-brand-50 dark:bg-slate-700/80 border-l-4 border-brand-600" 
-                    : "hover:bg-slate-100 dark:hover:bg-slate-700/40 border-l-4 border-transparent";
-
-                const studentMsgs = messages.filter(m => m.sender === student.name || m.receiver === student.name);
-                const lastMsg = studentMsgs[studentMsgs.length - 1]?.message || "No messages yet";
-
-                const div = document.createElement("div");
-                div.className = `p-3 flex items-center space-x-3 cursor-pointer transition ${activeClass}`;
-                div.onclick = () => selectChatTarget(student.name);
-                div.innerHTML = `
-                    <div class="w-9 h-9 rounded-full bg-brand-100 text-brand-700 dark:bg-slate-700 dark:text-brand-400 font-bold flex items-center justify-center text-xs">
-                        ${student.name.charAt(0).toUpperCase()}
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <div class="flex justify-between items-baseline">
-                            <h4 class="font-semibold text-xs text-slate-800 dark:text-slate-100 truncate">${student.name}</h4>
+            container.innerHTML = filtered.map(m => {
+                const isMe = m.sender === currentUser.name;
+                return `
+                    <div class="flex flex-col ${isMe ? 'items-end' : 'items-start'}">
+                        <div class="max-w-[80%] sm:max-w-[70%] rounded-2xl px-4 py-2.5 text-xs sm:text-sm leading-relaxed ${
+                            isMe 
+                            ? 'bg-emerald-600 text-white rounded-br-none shadow-sm' 
+                            : 'bg-white text-slate-800 border border-slate-200/80 rounded-bl-none shadow-sm'
+                        }">
+                            <div class="text-[10px] font-semibold ${isMe ? 'text-emerald-100' : 'text-emerald-700'} mb-1">${m.sender}</div>
+                            <div>${m.message}</div>
                         </div>
-                        <p class="text-[11px] text-slate-400 truncate mt-0.5">${lastMsg}</p>
                     </div>
                 `;
-                container.appendChild(div);
-            });
-        }
-
-        function selectChatTarget(studentName) {
-            selectedStudent = studentName;
-            renderStudentList();
-            renderMessages();
-        }
-
-        // RENDER MESSAGES
-        function renderMessages() {
-            const container = document.getElementById("messagesContainer");
-            container.innerHTML = "";
-
-            const targetStudent = currentUser.role === 'Student' ? currentUser.name : selectedStudent;
-
-            document.getElementById("chatHeaderName").textContent = currentUser.role === 'Student' ? "Teacher & EduBot Helpdesk" : (targetStudent || "Select Student");
-            document.getElementById("chatAvatar").textContent = (targetStudent || "S").charAt(0).toUpperCase();
-
-            const activeMessages = messages.filter(m => 
-                m.sender === targetStudent || 
-                m.receiver === targetStudent ||
-                (m.receiver === "Teacher/Admin" && currentUser.role === 'Teacher')
-            );
-
-            if (activeMessages.length === 0) {
-                container.innerHTML = `<div class="h-full flex flex-col items-center justify-center text-slate-400 text-xs space-y-2">
-                    <i class="fa-regular fa-comments text-3xl"></i>
-                    <p>No chat history available. Start typing below!</p>
-                </div>`;
-                return;
-            }
-
-            activeMessages.forEach(msg => {
-                const isMe = (currentUser.role === 'Student' && msg.sender === currentUser.name) || 
-                             (currentUser.role === 'Teacher' && msg.senderRole === "Admin");
-                const isBot = msg.sender === BOT_NAME || msg.senderRole === "Bot";
-
-                const wrapperDiv = document.createElement("div");
-                wrapperDiv.className = `flex flex-col ${isMe ? 'items-end' : 'items-start'} mb-2`;
-
-                let bgClasses = isMe 
-                    ? "bg-brand-600 text-white rounded-2xl rounded-tr-none" 
-                    : isBot 
-                        ? "bg-amber-100 text-amber-900 dark:bg-amber-950/80 dark:text-amber-200 border border-amber-200 dark:border-amber-800 rounded-2xl" 
-                        : "bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-100 rounded-2xl rounded-tl-none border border-slate-200 dark:border-slate-600";
-
-                wrapperDiv.innerHTML = `
-                    <div class="max-w-[80%] sm:max-w-[70%] px-4 py-2.5 ${bgClasses} shadow-sm text-xs leading-relaxed relative">
-                        ${!isMe ? `<div class="font-bold text-[10px] opacity-75 mb-0.5">${msg.sender}</div>` : ''}
-                        <p class="whitespace-pre-wrap">${escapeHtml(msg.message || msg.text || '')}</p>
-                        <div class="text-[9px] opacity-60 text-right mt-1">${msg.timestamp || ''}</div>
-                    </div>
-                `;
-                container.appendChild(wrapperDiv);
-            });
+            }).join('');
 
             container.scrollTop = container.scrollHeight;
         }
 
-        // SEND MESSAGE
-        async function handleSendMessage(e) {
+        function handleSendMessage(e) {
             e.preventDefault();
-            const input = document.getElementById("messageInput");
+            const input = document.getElementById('messageInput');
             const text = input.value.trim();
-
             if (!text) return;
 
-            const targetStudent = currentUser.role === 'Student' ? currentUser.name : selectedStudent;
-
-            if (!targetStudent) {
-                showToast("Please select a student first", "error");
+            if (currentUser.role === 'teacher' && !activeSelectedStudent) {
+                alert("Please select a student to message first.");
                 return;
             }
 
-            const senderName = currentUser.role === 'Student' ? currentUser.name : "Teacher/Admin";
-            const receiverName = currentUser.role === 'Student' ? "Teacher/Admin" : targetStudent;
-            const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const receiver = currentUser.role === 'student' ? 'Teacher' : activeSelectedStudent;
 
             const newMsg = {
-                sender: senderName,
-                receiver: receiverName,
+                timestamp: new Date().toISOString(),
+                sender: currentUser.name,
+                receiver: receiver,
                 message: text,
-                timestamp: timestamp,
-                senderRole: currentUser.role === 'Student' ? "Student" : "Admin"
+                senderRole: currentUser.role
             };
 
-            messages.push(newMsg);
-            saveLocalMessages();
+            localMessages.push(newMsg);
             renderMessages();
-            renderStudentList();
-
             input.value = "";
 
-            // Push to Apps Script backend
-            saveRemoteMessage(newMsg);
+            postMessageToSheet(newMsg);
 
-            // Auto Bot Reply trigger for student
-            if (currentUser.role === 'Student') {
-                checkAndTriggerBotReply(text, currentUser.name);
+            if (currentUser.role === 'student') {
+                checkAndSendBotReply(text);
             }
         }
 
-        function sendQuickReply(text) {
-            document.getElementById("messageInput").value = text;
+        function sendPredefinedMessage(type) {
+            let text = "";
+            if (type === 'Syllabus') text = "Can you share the exam syllabus?";
+            if (type === 'Assignment') text = "What is today's homework assignment?";
+            if (type === 'Timings') text = "What are the class timings?";
+            if (type === 'Notes') text = "Where can I get the chapter notes?";
+
+            document.getElementById('messageInput').value = text;
             handleSendMessage(new Event('submit'));
         }
 
-        // AUTOMATED BOT REPLIES
-        function checkAndTriggerBotReply(userText, studentName) {
-            const cleanText = userText.toLowerCase();
-            let matchedReply = null;
+        function checkAndSendBotReply(studentMessage) {
+            const msgLower = studentMessage.toLowerCase();
+            let botResponse = null;
 
-            for (const rule of autoBotReplies) {
-                if (rule.keywords.some(kw => cleanText.includes(kw))) {
-                    matchedReply = rule.response;
-                    break;
-                }
+            if (msgLower.includes('syllabus') || msgLower.includes('exam')) {
+                botResponse = PREDEFINED_REPLIES["syllabus"];
+            } else if (msgLower.includes('assignment') || msgLower.includes('homework')) {
+                botResponse = PREDEFINED_REPLIES["assignment"];
+            } else if (msgLower.includes('timing') || msgLower.includes('time') || msgLower.includes('class')) {
+                botResponse = PREDEFINED_REPLIES["timings"];
+            } else if (msgLower.includes('note') || msgLower.includes('pdf') || msgLower.includes('chapter')) {
+                botResponse = PREDEFINED_REPLIES["notes"];
             }
 
-            if (matchedReply) {
+            if (botResponse) {
                 setTimeout(() => {
-                    const botMsg = {
-                        sender: BOT_NAME,
-                        receiver: studentName,
-                        message: matchedReply,
-                        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                        senderRole: "Bot"
+                    const replyObj = {
+                        timestamp: new Date().toISOString(),
+                        sender: "Teacher (Auto-Response)",
+                        receiver: currentUser.name,
+                        message: botResponse,
+                        senderRole: "teacher"
                     };
-                    messages.push(botMsg);
-                    saveLocalMessages();
+                    localMessages.push(replyObj);
                     renderMessages();
-                    saveRemoteMessage(botMsg);
-                }, 500);
+                    postMessageToSheet(replyObj);
+                }, 700);
             }
         }
 
-        // BACKEND API SYNC FUNCTIONS
-        async function syncDataWithBackend() {
-            if (!webAppUrl) return;
-
+        function postMessageToSheet(msgData) {
+            updateSyncStatus('Syncing...');
             try {
-                // Fetch Users
-                const resUsers = await fetch(`${webAppUrl}?action=getUsers`);
-                if (resUsers.ok) {
-                    const remoteUsers = await resUsers.json();
-                    if (Array.isArray(remoteUsers) && remoteUsers.length > 0) {
-                        students = remoteUsers;
-                        saveLocalStudents();
-                    }
-                }
-
-                // Fetch Messages
-                const resMsgs = await fetch(`${webAppUrl}?action=getMessages`);
-                if (resMsgs.ok) {
-                    const remoteMsgs = await resMsgs.json();
-                    if (Array.isArray(remoteMsgs) && remoteMsgs.length > 0) {
-                        messages = remoteMsgs;
-                        saveLocalMessages();
-                    }
-                }
-
-                if (currentUser) {
-                    renderStudentList();
-                    renderMessages();
-                }
-            } catch (err) {
-                console.warn("Backend poll warning:", err);
-            }
-        }
-
-        async function saveRemoteStudent(name, pin) {
-            if (!webAppUrl) return;
-            try {
-                await fetch(webAppUrl, {
-                    method: "POST",
-                    mode: "no-cors",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ action: "register", name: name, pin: pin })
-                });
-            } catch (e) {
-                console.error("Failed to post student registration", e);
-            }
-        }
-
-        async function saveRemoteMessage(msg) {
-            if (!webAppUrl) return;
-            try {
-                await fetch(webAppUrl, {
-                    method: "POST",
-                    mode: "no-cors",
-                    headers: { "Content-Type": "application/json" },
+                fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         action: "sendMessage",
-                        sender: msg.sender,
-                        receiver: msg.receiver,
-                        message: msg.message,
-                        senderRole: msg.senderRole
+                        sender: msgData.sender,
+                        receiver: msgData.receiver,
+                        message: msgData.message,
+                        senderRole: msgData.senderRole
                     })
-                });
-            } catch (e) {
-                console.error("Failed to post message", e);
+                }).then(() => updateSyncStatus('Synced'))
+                  .catch(() => updateSyncStatus('Saved locally'));
+            } catch (err) {
+                updateSyncStatus('Saved locally');
             }
         }
 
-        // LOCAL STORAGE
-        function saveLocalStudents() { localStorage.setItem("educhat_students", JSON.stringify(students)); }
-        function saveLocalMessages() { localStorage.setItem("educhat_messages", JSON.stringify(messages)); }
-
-        function saveAppsScriptUrl() {
-            const url = document.getElementById("webAppUrlInput").value.trim();
-            webAppUrl = url;
-            localStorage.setItem("educhat_webapp_url", url);
-            closeModal("settingsModal");
-            showToast("Backend URL Updated & Saved!");
-            syncDataWithBackend();
+        function updateSyncStatus(text) {
+            const badge = document.getElementById('syncText');
+            if (badge) badge.textContent = text;
         }
 
-        // UTILITY FUNCTIONS
-        function openModal(id) { document.getElementById(id).classList.remove("hidden"); }
-        function closeModal(id) { document.getElementById(id).classList.add("hidden"); }
-
-        function showToast(message, type = "success") {
-            const toast = document.getElementById("toast");
-            document.getElementById("toastMessage").textContent = message;
-            document.getElementById("toastIcon").innerHTML = type === "error" 
-                ? `<i class="fa-solid fa-triangle-exclamation text-rose-400"></i>` 
-                : `<i class="fa-solid fa-circle-check text-emerald-400"></i>`;
-
-            toast.classList.remove("opacity-0", "pointer-events-none", "translate-y-2");
-            setTimeout(() => toast.classList.add("opacity-0", "pointer-events-none", "translate-y-2"), 3000);
-        }
-
-        function escapeHtml(str) {
-            return (str || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-        }
-
-        function initTheme() {
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                document.documentElement.classList.add('dark');
-            }
-        }
-
-        function toggleDarkMode() {
-            document.documentElement.classList.toggle("dark");
+        function toggleMobileSidebar() {
+            const sidebar = document.getElementById('teacherSidebar');
+            sidebar.classList.toggle('hidden');
         }
     </script>
 </body>
