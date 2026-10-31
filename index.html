@@ -3,20 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Internship Chatbot & Mentor Portal</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Internship & Classroom Messenger</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <!-- Plus Jakarta Sans Font -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-                    },
                     colors: {
                         brand: {
                             50: '#ecfdf5',
@@ -39,7 +33,7 @@
         }
         body {
             font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: #f1f5f9;
+            background-color: #f8fafc;
         }
         .custom-scrollbar::-webkit-scrollbar {
             width: 5px;
@@ -52,17 +46,13 @@
             background: #cbd5e1;
             border-radius: 10px;
         }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
         .app-height {
             height: 100vh;
             height: 100dvh;
         }
-        /* Typing animation cursor */
         .typing-cursor::after {
             content: '|';
-            animation: blink 0.8s infinite;
+            animation: blink 0.7s infinite;
         }
         @keyframes blink {
             0%, 100% { opacity: 1; }
@@ -73,10 +63,10 @@
 <body class="text-slate-800 app-height flex justify-center items-center select-none overflow-hidden sm:p-4">
 
     <!-- MAIN APP CONTAINER -->
-    <div class="w-full max-w-md sm:max-w-4xl h-full sm:h-[94vh] sm:max-h-[880px] bg-slate-50 sm:rounded-[32px] sm:shadow-2xl sm:border sm:border-slate-200/80 overflow-hidden flex flex-col relative">
+    <div class="w-full max-w-md sm:max-w-5xl h-full sm:h-[94vh] sm:max-h-[880px] bg-slate-50 sm:rounded-[32px] sm:shadow-2xl sm:border sm:border-slate-200/80 overflow-hidden flex flex-col relative">
 
         <!-- AUTHENTICATION SCREEN -->
-        <div id="authScreen" class="flex-1 flex flex-col justify-between p-6 sm:p-10 overflow-y-auto bg-gradient-to-b from-brand-50/70 via-slate-50 to-white z-40">
+        <div id="authScreen" class="flex-1 flex flex-col justify-between p-6 sm:p-10 overflow-y-auto bg-gradient-to-b from-brand-50/70 via-slate-50 to-white">
             <div></div>
 
             <div class="w-full max-w-sm mx-auto">
@@ -84,23 +74,23 @@
                     <div class="w-16 h-16 bg-brand-600 text-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl shadow-brand-600/20">
                         <i class="fa-solid fa-graduation-cap text-2xl"></i>
                     </div>
-                    <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Internship Portal</h2>
-                    <p class="text-xs font-medium text-slate-500 mt-1">Smart Assistant & Mentor Support</p>
+                    <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Internship Portal</h2>
+                    <p class="text-xs font-medium text-slate-500 mt-1">Connect directly with your Teacher & Assistant</p>
                 </div>
 
                 <!-- Role Selector Tabs -->
                 <div class="flex bg-slate-200/70 p-1 rounded-2xl mb-6">
-                    <button id="tabStudent" type="button" onclick="switchAuthTab('student')" class="flex-1 py-2.5 text-xs font-bold rounded-xl transition-all duration-200 bg-white text-brand-700 shadow-sm">
-                        <i class="fa-solid fa-user-graduate mr-1"></i> Student Login
+                    <button id="tabStudent" onclick="switchAuthTab('student')" class="flex-1 py-2.5 text-xs font-semibold rounded-xl transition-all duration-200 bg-white text-brand-700 shadow-xs">
+                        <i class="fa-solid fa-user-graduate mr-1"></i> Student
                     </button>
-                    <button id="tabTeacher" type="button" onclick="switchAuthTab('teacher')" class="flex-1 py-2.5 text-xs font-bold rounded-xl transition-all duration-200 text-slate-500">
-                        <i class="fa-solid fa-chalkboard-user mr-1"></i> Mentor / Teacher
+                    <button id="tabTeacher" onclick="switchAuthTab('teacher')" class="flex-1 py-2.5 text-xs font-semibold rounded-xl transition-all duration-200 text-slate-500">
+                        <i class="fa-solid fa-chalkboard-user mr-1"></i> Teacher
                     </button>
                 </div>
 
                 <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
                     <div id="nameGroup">
-                        <label class="block text-xs font-bold text-slate-600 mb-1 ml-1">Full Registered Name</label>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1 ml-1">Full Name</label>
                         <div class="relative">
                             <i class="fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
                             <input type="text" id="authName" placeholder="Enter your full name" class="w-full bg-white border border-slate-200 focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10 rounded-2xl pl-11 pr-4 py-3.5 text-sm text-slate-800 placeholder-slate-400 outline-none transition">
@@ -108,323 +98,329 @@
                     </div>
 
                     <div>
-                        <label id="pinLabel" class="block text-xs font-bold text-slate-600 mb-1 ml-1">4-Digit Security PIN</label>
+                        <label id="pinLabel" class="block text-xs font-semibold text-slate-600 mb-1 ml-1">4-Digit Security PIN</label>
                         <div class="relative">
                             <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
                             <input type="password" id="authPin" maxlength="4" placeholder="••••" class="w-full bg-white border border-slate-200 focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10 rounded-2xl pl-11 pr-4 py-3.5 text-sm text-slate-800 placeholder-slate-400 outline-none tracking-widest transition">
                         </div>
                     </div>
 
-                    <button type="submit" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-3.5 rounded-2xl shadow-lg shadow-brand-600/20 active:scale-[0.98] transition duration-200 text-sm mt-3 flex items-center justify-center gap-2">
-                        <span>Enter Chatbot Portal</span>
+                    <button type="submit" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-semibold py-3.5 rounded-2xl shadow-lg shadow-brand-600/20 active:scale-[0.98] transition duration-200 text-sm mt-3 flex items-center justify-center gap-2">
+                        <span>Enter Portal</span>
                         <i class="fa-solid fa-arrow-right text-xs"></i>
                     </button>
                 </form>
             </div>
 
-            <div id="authNotice" class="text-center text-[11px] text-slate-400 font-semibold py-2">
+            <div id="authNotice" class="text-center text-[11px] text-slate-400 font-medium py-2">
                 New students are automatically registered on first login.
             </div>
         </div>
 
-        <!-- MAIN DASHBOARD SCREEN -->
-        <div id="mainDashboard" class="flex-1 flex flex-col hidden h-full overflow-hidden bg-slate-50">
+        <!-- MAIN DASHBOARD -->
+        <div id="mainDashboard" class="flex-1 flex flex-col hidden h-full overflow-hidden">
             
-            <!-- TOP NAVBAR -->
-            <header class="h-16 border-b border-slate-200/80 bg-white px-4 flex items-center justify-between shrink-0 z-20">
-                <div class="flex items-center gap-3">
-                    <button onclick="handleLogout()" title="Log Out" class="w-9 h-9 rounded-xl bg-red-50 hover:bg-red-500 hover:text-white border border-red-200/80 text-red-500 flex items-center justify-center transition active:scale-90 shrink-0">
-                        <i class="fa-solid fa-power-off text-sm"></i>
+            <!-- TOP APP BAR -->
+            <header class="h-16 border-b border-slate-200/80 bg-white px-3 sm:px-5 flex items-center justify-between shrink-0 shadow-xs z-20">
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <button onclick="handleLogout()" title="Log Out" class="w-10 h-10 rounded-2xl bg-red-50 hover:bg-red-500 hover:text-white border border-red-200/80 text-red-500 flex items-center justify-center transition active:scale-90 group shrink-0">
+                        <i class="fa-solid fa-power-off text-base group-hover:rotate-12 transition-transform duration-200"></i>
                     </button>
+
+                    <button id="mobileBackBtn" onclick="toggleMobileSidebar()" class="sm:hidden w-10 h-10 rounded-2xl bg-slate-100 text-slate-600 flex items-center justify-center hidden">
+                        <i class="fa-solid fa-users text-sm"></i>
+                    </button>
+
                     <div class="h-5 w-[1px] bg-slate-200"></div>
-                    <div class="flex items-center gap-2.5">
+
+                    <div class="flex items-center gap-2">
                         <div class="w-9 h-9 rounded-full bg-brand-100 border border-brand-300 text-brand-700 flex items-center justify-center text-xs font-bold shrink-0">
                             <i id="navRoleIcon" class="fa-solid fa-user-graduate"></i>
                         </div>
-                        <div class="leading-tight truncate max-w-[150px] sm:max-w-[220px]">
+                        <div class="leading-tight truncate max-w-[120px] sm:max-w-[180px]">
                             <h1 id="navUserName" class="text-xs sm:text-sm font-bold text-slate-900 truncate">User</h1>
-                            <p id="navUserRole" class="text-[10px] font-semibold text-slate-500 flex items-center gap-1">
+                            <p id="navUserRole" class="text-[10px] font-medium text-slate-500 flex items-center gap-1">
                                 <span class="w-1.5 h-1.5 rounded-full bg-brand-500 inline-block"></span> Student
                             </p>
                         </div>
                     </div>
                 </div>
 
-                <div id="syncBadge" class="px-3 py-1 rounded-full bg-brand-50 border border-brand-200/80 text-[10px] font-bold text-brand-700 flex items-center gap-1.5">
+                <div id="syncBadge" class="px-2.5 py-1 rounded-full bg-brand-50 border border-brand-200/60 text-[10px] font-semibold text-brand-700 flex items-center gap-1.5">
                     <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
-                    <span id="syncText">Connected</span>
+                    <span id="syncText">Live Fast Sync</span>
                 </div>
             </header>
 
-            <!-- WORKSPACE PANEL CONTENT -->
+            <!-- WORKSPACE PANEL -->
             <div class="flex-1 flex overflow-hidden relative">
 
-                <!-- TEACHER SIDEBAR (TEACHER ROLE ONLY) -->
-                <aside id="teacherSidebar" class="w-full sm:w-72 md:w-80 border-r border-slate-200 bg-white flex flex-col hidden z-30">
+                <!-- SIDEBAR (FOR TEACHER) -->
+                <aside id="teacherSidebar" class="absolute inset-0 z-30 bg-white sm:relative sm:z-0 w-full sm:w-72 md:w-80 border-r border-slate-200 flex flex-col hidden sm:flex">
                     <div class="p-3.5 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
                         <span class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
-                            <i class="fa-solid fa-users text-brand-600"></i> Student Messages
+                            <i class="fa-solid fa-users text-brand-600"></i> Registered Students
                         </span>
                         <button onclick="loadRemoteData()" title="Refresh" class="text-slate-400 hover:text-slate-700 text-xs p-1">
                             <i class="fa-solid fa-rotate"></i>
                         </button>
                     </div>
+
                     <div id="studentListContainer" class="flex-1 overflow-y-auto custom-scrollbar p-2 space-y-1">
-                        <!-- Dynamic Student Roster -->
+                        <!-- Student List populated dynamically for teacher -->
                     </div>
                 </aside>
 
-                <!-- MAIN DISPLAY CANVAS -->
-                <main id="chatMainCanvas" class="flex-1 flex flex-col bg-[#f8fafc] relative w-full overflow-hidden">
-
-                    <!-- VIEW 1: STUDENT MAIN MENU & WELCOME SCREEN -->
-                    <div id="studentMainMenuView" class="flex-1 overflow-y-auto custom-scrollbar p-4 sm:p-6 space-y-6">
+                <!-- MAIN WORKSPACE -->
+                <main class="flex-1 flex flex-col bg-[#f8fafc] relative w-full overflow-hidden">
+                    
+                    <!-- STUDENT SCREEN: MAIN MENU AND FAQ NAVIGATION -->
+                    <div id="studentMainView" class="flex-1 flex flex-col overflow-y-auto custom-scrollbar p-4 sm:p-6 space-y-5">
                         
-                        <!-- FIRST TIME WELCOME CARD WITH TYPING ANIMATION -->
-                        <div class="bg-white border border-brand-200/80 rounded-2xl p-4 shadow-sm flex items-start gap-3.5">
-                            <div class="w-10 h-10 rounded-xl bg-brand-100 text-brand-600 flex items-center justify-center shrink-0 mt-0.5">
+                        <!-- FIRST TIME WELCOME BANNER WITH TYPING ANIMATION -->
+                        <div id="welcomeBanner" class="bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-5 shadow-xs flex items-start gap-3.5">
+                            <div class="w-10 h-10 rounded-xl bg-brand-600 text-white flex items-center justify-center shrink-0 shadow-md shadow-brand-600/20 mt-0.5">
                                 <i class="fa-solid fa-robot text-lg"></i>
                             </div>
                             <div class="flex-1">
-                                <div class="text-[11px] font-bold text-brand-700 tracking-wide uppercase mb-0.5">Internship Assistant</div>
-                                <div id="welcomeTypingText" class="text-sm font-semibold text-slate-800 min-h-[24px]"></div>
+                                <div class="text-xs font-bold text-brand-700 uppercase tracking-wider mb-1">Internship Assistant</div>
+                                <div id="welcomeText" class="text-sm sm:text-base font-semibold text-slate-800 min-h-[24px]"></div>
                             </div>
                         </div>
 
-                        <!-- SECTION HEADER -->
-                        <div>
-                            <div class="text-[11px] font-extrabold text-brand-700 tracking-wider uppercase mb-1">Student Support</div>
-                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">How can I help you today?</h2>
-                            <p class="text-xs font-medium text-slate-500 mt-0.5">Choose a topic to find the information you need.</p>
+                        <!-- SECTION HEADING -->
+                        <div id="mainMenuHeading" class="space-y-1">
+                            <span class="text-[11px] font-bold text-brand-700 uppercase tracking-widest">Student Support</span>
+                            <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">How can I help you today?</h2>
+                            <p class="text-xs text-slate-500 font-medium">Choose a topic to find the information you need.</p>
+                        </div>
+
+                        <!-- BREADCRUMB BAR -->
+                        <div id="faqBreadcrumb" class="hidden flex items-center justify-between bg-white p-3 rounded-2xl border border-slate-200 shadow-2xs">
+                            <button onclick="showMainMenu()" class="text-xs font-bold text-brand-700 hover:text-brand-800 flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-brand-50 transition">
+                                <i class="fa-solid fa-arrow-left"></i> Back to Main Menu
+                            </button>
+                            <span id="categoryTitleBadge" class="text-xs font-semibold text-slate-600 truncate max-w-[180px] sm:max-w-none"></span>
                         </div>
 
                         <!-- 10 MAIN MENU CARDS GRID -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-6">
+                        <div id="mainMenuGrid" class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                            <div onclick="openFAQCategory(0)" class="group bg-white hover:bg-brand-50/40 border border-slate-200/90 hover:border-brand-300 p-4 rounded-2xl cursor-pointer transition-all duration-200 shadow-2xs hover:shadow-md flex items-center justify-between">
+                                <div class="flex items-center gap-3.5">
+                                    <div class="w-11 h-11 rounded-xl bg-brand-100/70 text-brand-700 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                                        <i class="fa-solid fa-clipboard-list text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-brand-800">1. Registration & Joining</h3>
+                                        <p class="text-[11px] text-slate-500 font-medium">Registration steps and required documents</p>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:text-brand-600 group-hover:translate-x-0.5 transition-all"></i>
+                            </div>
+
+                            <div onclick="openFAQCategory(1)" class="group bg-white hover:bg-brand-50/40 border border-slate-200/90 hover:border-brand-300 p-4 rounded-2xl cursor-pointer transition-all duration-200 shadow-2xs hover:shadow-md flex items-center justify-between">
+                                <div class="flex items-center gap-3.5">
+                                    <div class="w-11 h-11 rounded-xl bg-brand-100/70 text-brand-700 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                                        <i class="fa-solid fa-indian-rupee-sign text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-brand-800">2. Payment & Registration Fees</h3>
+                                        <p class="text-[11px] text-slate-500 font-medium">Fee amount, payment and receipts</p>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:text-brand-600 group-hover:translate-x-0.5 transition-all"></i>
+                            </div>
+
+                            <div onclick="openFAQCategory(2)" class="group bg-white hover:bg-brand-50/40 border border-slate-200/90 hover:border-brand-300 p-4 rounded-2xl cursor-pointer transition-all duration-200 shadow-2xs hover:shadow-md flex items-center justify-between">
+                                <div class="flex items-center gap-3.5">
+                                    <div class="w-11 h-11 rounded-xl bg-brand-100/70 text-brand-700 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                                        <i class="fa-solid fa-calendar-days text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-brand-800">3. Internship Timing & Schedule</h3>
+                                        <p class="text-[11px] text-slate-500 font-medium">Starting date, batches and working hours</p>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:text-brand-600 group-hover:translate-x-0.5 transition-all"></i>
+                            </div>
+
+                            <div onclick="openFAQCategory(3)" class="group bg-white hover:bg-brand-50/40 border border-slate-200/90 hover:border-brand-300 p-4 rounded-2xl cursor-pointer transition-all duration-200 shadow-2xs hover:shadow-md flex items-center justify-between">
+                                <div class="flex items-center gap-3.5">
+                                    <div class="w-11 h-11 rounded-xl bg-brand-100/70 text-brand-700 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                                        <i class="fa-solid fa-user-check text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-brand-800">4. Attendance & Leave</h3>
+                                        <p class="text-[11px] text-slate-500 font-medium">Attendance, late arrival and leave</p>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:text-brand-600 group-hover:translate-x-0.5 transition-all"></i>
+                            </div>
+
+                            <div onclick="openFAQCategory(4)" class="group bg-white hover:bg-brand-50/40 border border-slate-200/90 hover:border-brand-300 p-4 rounded-2xl cursor-pointer transition-all duration-200 shadow-2xs hover:shadow-md flex items-center justify-between">
+                                <div class="flex items-center gap-3.5">
+                                    <div class="w-11 h-11 rounded-xl bg-brand-100/70 text-brand-700 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                                        <i class="fa-solid fa-laptop-code text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-brand-800">5. Training & Daily Work</h3>
+                                        <p class="text-[11px] text-slate-500 font-medium">Training, tasks and practical guidance</p>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:text-brand-600 group-hover:translate-x-0.5 transition-all"></i>
+                            </div>
+
+                            <div onclick="openFAQCategory(5)" class="group bg-white hover:bg-brand-50/40 border border-slate-200/90 hover:border-brand-300 p-4 rounded-2xl cursor-pointer transition-all duration-200 shadow-2xs hover:shadow-md flex items-center justify-between">
+                                <div class="flex items-center gap-3.5">
+                                    <div class="w-11 h-11 rounded-xl bg-brand-100/70 text-brand-700 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                                        <i class="fa-solid fa-shield-halved text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-brand-800">6. Rules & Discipline</h3>
+                                        <p class="text-[11px] text-slate-500 font-medium">Office rules and student conduct</p>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:text-brand-600 group-hover:translate-x-0.5 transition-all"></i>
+                            </div>
+
+                            <div onclick="openFAQCategory(6)" class="group bg-white hover:bg-brand-50/40 border border-slate-200/90 hover:border-brand-300 p-4 rounded-2xl cursor-pointer transition-all duration-200 shadow-2xs hover:shadow-md flex items-center justify-between">
+                                <div class="flex items-center gap-3.5">
+                                    <div class="w-11 h-11 rounded-xl bg-brand-100/70 text-brand-700 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                                        <i class="fa-solid fa-book-bookmark text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-brand-800">7. Assignments & Logbook</h3>
+                                        <p class="text-[11px] text-slate-500 font-medium">Daily records and assignments</p>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:text-brand-600 group-hover:translate-x-0.5 transition-all"></i>
+                            </div>
+
+                            <div onclick="openFAQCategory(7)" class="group bg-white hover:bg-brand-50/40 border border-slate-200/90 hover:border-brand-300 p-4 rounded-2xl cursor-pointer transition-all duration-200 shadow-2xs hover:shadow-md flex items-center justify-between">
+                                <div class="flex items-center gap-3.5">
+                                    <div class="w-11 h-11 rounded-xl bg-brand-100/70 text-brand-700 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                                        <i class="fa-solid fa-certificate text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-brand-800">8. Certificate & Completion</h3>
+                                        <p class="text-[11px] text-slate-500 font-medium">Completion and certificate details</p>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:text-brand-600 group-hover:translate-x-0.5 transition-all"></i>
+                            </div>
+
+                            <div onclick="openFAQCategory(8)" class="group bg-white hover:bg-brand-50/40 border border-slate-200/90 hover:border-brand-300 p-4 rounded-2xl cursor-pointer transition-all duration-200 shadow-2xs hover:shadow-md flex items-center justify-between">
+                                <div class="flex items-center gap-3.5">
+                                    <div class="w-11 h-11 rounded-xl bg-brand-100/70 text-brand-700 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                                        <i class="fa-solid fa-headset text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-brand-800">9. Communication & General Support</h3>
+                                        <p class="text-[11px] text-slate-500 font-medium">Announcements and general assistance</p>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:text-brand-600 group-hover:translate-x-0.5 transition-all"></i>
+                            </div>
+
+                            <div onclick="openMentorChatInterface()" class="group bg-brand-600 hover:bg-brand-700 p-4 rounded-2xl cursor-pointer transition-all duration-200 shadow-md hover:shadow-xl flex items-center justify-between text-white">
+                                <div class="flex items-center gap-3.5">
+                                    <div class="w-11 h-11 rounded-xl bg-white/20 text-white flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                                        <i class="fa-solid fa-comments text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xs sm:text-sm font-bold text-white">10. Ask Directly to the Mentor</h3>
+                                        <p class="text-[11px] text-brand-100 font-medium">Send a personal message to your mentor</p>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-arrow-right text-xs text-white/80 group-hover:translate-x-1 transition-all"></i>
+                            </div>
+                        </div>
+
+                        <!-- FAQ QUESTIONS LIST CONTAINER -->
+                        <div id="faqQuestionsContainer" class="hidden space-y-3"></div>
+
+                        <!-- FAQ ANSWER VIEW DISPLAY AREA -->
+                        <div id="faqAnswerDisplay" class="hidden space-y-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                                <span class="text-xs font-bold text-brand-700 uppercase tracking-wider flex items-center gap-1.5">
+                                    <i class="fa-solid fa-circle-question"></i> Selected Question
+                                </span>
+                                <button onclick="backToQuestionsList()" class="text-xs font-semibold text-slate-500 hover:text-slate-800">
+                                    <i class="fa-solid fa-arrow-left"></i> Back to Questions
+                                </button>
+                            </div>
                             
-                            <!-- 1. Registration & Joining -->
-                            <div onclick="openFaqCategory(0)" class="group p-4 bg-white hover:bg-slate-50 border border-slate-200/80 hover:border-brand-300 rounded-2xl shadow-xs hover:shadow-md transition duration-200 cursor-pointer flex items-center justify-between active:scale-[0.99]">
-                                <div class="flex items-center gap-3.5">
-                                    <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg shrink-0 group-hover:bg-brand-600 group-hover:text-white transition">
-                                        <i class="fa-solid fa-clipboard-list"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Registration & Joining</h3>
-                                        <p class="text-[11px] text-slate-500 font-medium mt-0.5">Registration steps and required documents</p>
-                                    </div>
+                            <h3 id="displayQuestionText" class="text-sm sm:text-base font-bold text-slate-900 bg-slate-50 p-3.5 rounded-xl border border-slate-200/80"></h3>
+
+                            <div class="space-y-1.5 pt-1">
+                                <div class="text-[11px] font-bold text-brand-700 uppercase tracking-wider flex items-center gap-1.5">
+                                    <i class="fa-solid fa-robot"></i> Answer
                                 </div>
-                                <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:text-brand-600 group-hover:translate-x-0.5 transition"></i>
+                                <div class="p-4 rounded-xl bg-brand-50/60 border border-brand-200 text-slate-800 font-medium text-xs sm:text-sm leading-relaxed min-h-[60px]" id="displayAnswerTextContainer">
+                                    <span id="displayAnswerText" class="typing-cursor"></span>
+                                </div>
                             </div>
 
-                            <!-- 2. Payment & Registration Fees -->
-                            <div onclick="openFaqCategory(1)" class="group p-4 bg-white hover:bg-slate-50 border border-slate-200/80 hover:border-brand-300 rounded-2xl shadow-xs hover:shadow-md transition duration-200 cursor-pointer flex items-center justify-between active:scale-[0.99]">
-                                <div class="flex items-center gap-3.5">
-                                    <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg shrink-0 group-hover:bg-brand-600 group-hover:text-white transition">
-                                        <i class="fa-solid fa-indian-rupee-sign"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Payment & Registration Fees</h3>
-                                        <p class="text-[11px] text-slate-500 font-medium mt-0.5">Fee amount, payment and receipts</p>
-                                    </div>
-                                </div>
-                                <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:text-brand-600 group-hover:translate-x-0.5 transition"></i>
+                            <div class="flex items-center justify-between pt-2 border-t border-slate-100">
+                                <button onclick="backToQuestionsList()" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl text-xs font-semibold text-slate-700 transition">
+                                    <i class="fa-solid fa-list mr-1"></i> More Questions
+                                </button>
+                                <button onclick="showMainMenu()" class="px-3.5 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition">
+                                    <i class="fa-solid fa-house mr-1"></i> Main Menu
+                                </button>
                             </div>
-
-                            <!-- 3. Internship Timing & Schedule -->
-                            <div onclick="openFaqCategory(2)" class="group p-4 bg-white hover:bg-slate-50 border border-slate-200/80 hover:border-brand-300 rounded-2xl shadow-xs hover:shadow-md transition duration-200 cursor-pointer flex items-center justify-between active:scale-[0.99]">
-                                <div class="flex items-center gap-3.5">
-                                    <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg shrink-0 group-hover:bg-brand-600 group-hover:text-white transition">
-                                        <i class="fa-regular fa-calendar-days"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Internship Timing & Schedule</h3>
-                                        <p class="text-[11px] text-slate-500 font-medium mt-0.5">Starting date, batches and working hours</p>
-                                    </div>
-                                </div>
-                                <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:text-brand-600 group-hover:translate-x-0.5 transition"></i>
-                            </div>
-
-                            <!-- 4. Attendance & Leave -->
-                            <div onclick="openFaqCategory(3)" class="group p-4 bg-white hover:bg-slate-50 border border-slate-200/80 hover:border-brand-300 rounded-2xl shadow-xs hover:shadow-md transition duration-200 cursor-pointer flex items-center justify-between active:scale-[0.99]">
-                                <div class="flex items-center gap-3.5">
-                                    <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg shrink-0 group-hover:bg-brand-600 group-hover:text-white transition">
-                                        <i class="fa-solid fa-calendar-check"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Attendance & Leave</h3>
-                                        <p class="text-[11px] text-slate-500 font-medium mt-0.5">Attendance, late arrival and leave</p>
-                                    </div>
-                                </div>
-                                <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:text-brand-600 group-hover:translate-x-0.5 transition"></i>
-                            </div>
-
-                            <!-- 5. Training & Daily Work -->
-                            <div onclick="openFaqCategory(4)" class="group p-4 bg-white hover:bg-slate-50 border border-slate-200/80 hover:border-brand-300 rounded-2xl shadow-xs hover:shadow-md transition duration-200 cursor-pointer flex items-center justify-between active:scale-[0.99]">
-                                <div class="flex items-center gap-3.5">
-                                    <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg shrink-0 group-hover:bg-brand-600 group-hover:text-white transition">
-                                        <i class="fa-solid fa-laptop-code"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Training & Daily Work</h3>
-                                        <p class="text-[11px] text-slate-500 font-medium mt-0.5">Training, tasks and practical guidance</p>
-                                    </div>
-                                </div>
-                                <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:text-brand-600 group-hover:translate-x-0.5 transition"></i>
-                            </div>
-
-                            <!-- 6. Rules & Discipline -->
-                            <div onclick="openFaqCategory(5)" class="group p-4 bg-white hover:bg-slate-50 border border-slate-200/80 hover:border-brand-300 rounded-2xl shadow-xs hover:shadow-md transition duration-200 cursor-pointer flex items-center justify-between active:scale-[0.99]">
-                                <div class="flex items-center gap-3.5">
-                                    <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg shrink-0 group-hover:bg-brand-600 group-hover:text-white transition">
-                                        <i class="fa-solid fa-shield-halved"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Rules & Discipline</h3>
-                                        <p class="text-[11px] text-slate-500 font-medium mt-0.5">Office rules and student conduct</p>
-                                    </div>
-                                </div>
-                                <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:text-brand-600 group-hover:translate-x-0.5 transition"></i>
-                            </div>
-
-                            <!-- 7. Assignments & Logbook -->
-                            <div onclick="openFaqCategory(6)" class="group p-4 bg-white hover:bg-slate-50 border border-slate-200/80 hover:border-brand-300 rounded-2xl shadow-xs hover:shadow-md transition duration-200 cursor-pointer flex items-center justify-between active:scale-[0.99]">
-                                <div class="flex items-center gap-3.5">
-                                    <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg shrink-0 group-hover:bg-brand-600 group-hover:text-white transition">
-                                        <i class="fa-solid fa-book-open"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Assignments & Logbook</h3>
-                                        <p class="text-[11px] text-slate-500 font-medium mt-0.5">Daily records and assignments</p>
-                                    </div>
-                                </div>
-                                <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:text-brand-600 group-hover:translate-x-0.5 transition"></i>
-                            </div>
-
-                            <!-- 8. Certificate & Completion -->
-                            <div onclick="openFaqCategory(7)" class="group p-4 bg-white hover:bg-slate-50 border border-slate-200/80 hover:border-brand-300 rounded-2xl shadow-xs hover:shadow-md transition duration-200 cursor-pointer flex items-center justify-between active:scale-[0.99]">
-                                <div class="flex items-center gap-3.5">
-                                    <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg shrink-0 group-hover:bg-brand-600 group-hover:text-white transition">
-                                        <i class="fa-solid fa-award"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Certificate & Completion</h3>
-                                        <p class="text-[11px] text-slate-500 font-medium mt-0.5">Completion and certificate details</p>
-                                    </div>
-                                </div>
-                                <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:text-brand-600 group-hover:translate-x-0.5 transition"></i>
-                            </div>
-
-                            <!-- 9. Communication & General Support -->
-                            <div onclick="openFaqCategory(8)" class="group p-4 bg-white hover:bg-slate-50 border border-slate-200/80 hover:border-brand-300 rounded-2xl shadow-xs hover:shadow-md transition duration-200 cursor-pointer flex items-center justify-between active:scale-[0.99]">
-                                <div class="flex items-center gap-3.5">
-                                    <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg shrink-0 group-hover:bg-brand-600 group-hover:text-white transition">
-                                        <i class="fa-solid fa-headset"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Communication & Support</h3>
-                                        <p class="text-[11px] text-slate-500 font-medium mt-0.5">Announcements and general assistance</p>
-                                    </div>
-                                </div>
-                                <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:text-brand-600 group-hover:translate-x-0.5 transition"></i>
-                            </div>
-
-                            <!-- 10. Ask Directly to the Mentor (Highlighted Card) -->
-                            <div onclick="openMentorChatView()" class="group p-4 bg-brand-600 hover:bg-brand-700 text-white border border-brand-500 rounded-2xl shadow-md hover:shadow-lg transition duration-200 cursor-pointer flex items-center justify-between active:scale-[0.99]">
-                                <div class="flex items-center gap-3.5">
-                                    <div class="w-11 h-11 rounded-xl bg-white/20 text-white flex items-center justify-center text-lg shrink-0">
-                                        <i class="fa-solid fa-comments"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xs sm:text-sm font-extrabold leading-tight">Ask Directly to the Mentor</h3>
-                                        <p class="text-[11px] text-brand-100 font-medium mt-0.5">Send a personal message to your mentor</p>
-                                    </div>
-                                </div>
-                                <i class="fa-solid fa-chevron-right text-xs text-white/80 group-hover:translate-x-0.5 transition"></i>
-                            </div>
-
                         </div>
+
                     </div>
 
-                    <!-- VIEW 2: EXPANDABLE FAQ QUESTIONS CATEGORY SCREEN -->
-                    <div id="faqQuestionsView" class="flex-1 flex flex-col hidden overflow-hidden bg-slate-50">
-                        <!-- FAQ Header -->
-                        <div class="p-4 bg-white border-b border-slate-200/80 flex items-center justify-between shrink-0">
-                            <button onclick="showMainMenu()" class="text-xs font-bold text-slate-600 hover:text-brand-600 flex items-center gap-2 py-1.5 px-3 rounded-xl bg-slate-100 hover:bg-brand-50 transition">
-                                <i class="fa-solid fa-arrow-left"></i> Main Menu
-                            </button>
-                            <span id="faqCategoryTitle" class="text-xs sm:text-sm font-extrabold text-brand-700 truncate max-w-[200px] sm:max-w-[320px]">Category Title</span>
-                        </div>
-
-                        <!-- FAQ Question Items List -->
-                        <div id="faqQuestionsList" class="flex-1 overflow-y-auto p-4 space-y-2.5 custom-scrollbar">
-                            <!-- Question buttons populated dynamically -->
-                        </div>
-                    </div>
-
-                    <!-- VIEW 3: DEDICATED CHAT INTERFACE (FAQ CONVERSATION OR MENTOR CHAT) -->
-                    <div id="chatInterfaceView" class="flex-1 flex flex-col hidden overflow-hidden bg-[#f8fafc]">
+                    <!-- MENTOR CHAT INTERFACE -->
+                    <div id="mentorChatView" class="flex-1 flex flex-col hidden h-full overflow-hidden bg-[#f8fafc]">
                         
-                        <!-- CHAT HEADER BANNER -->
-                        <div class="p-3 px-4 border-b border-slate-200/80 bg-white flex items-center justify-between shrink-0">
+                        <div id="chatHeader" class="p-3.5 px-4 border-b border-slate-200/80 bg-white flex items-center justify-between shrink-0 shadow-2xs">
                             <div class="flex items-center gap-3">
-                                <button id="chatHeaderBackBtn" onclick="showMainMenu()" class="text-xs font-bold text-slate-600 hover:text-brand-600 flex items-center gap-1.5 py-1.5 px-3 rounded-xl bg-slate-100 hover:bg-brand-50 transition">
-                                    <i class="fa-solid fa-arrow-left"></i> Main Menu
+                                <button onclick="exitMentorChat()" class="text-slate-500 hover:text-slate-800 p-1 mr-1">
+                                    <i class="fa-solid fa-arrow-left text-sm"></i>
                                 </button>
-                                <div class="h-4 w-[1px] bg-slate-200"></div>
+                                <div class="w-9 h-9 rounded-full bg-brand-600 text-white flex items-center justify-center text-sm shadow-md shadow-brand-600/20 shrink-0">
+                                    <i id="chatHeaderIcon" class="fa-solid fa-chalkboard-user"></i>
+                                </div>
                                 <div>
-                                    <h3 id="chatHeaderTitle" class="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Teacher / Mentor</h3>
-                                    <p id="chatHeaderSubtitle" class="text-[10px] text-slate-500 font-medium">Direct Communication Channel</p>
+                                    <h3 id="chatHeaderTitle" class="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Teacher & Mentor</h3>
+                                    <p id="chatHeaderSubtitle" class="text-[10px] text-slate-500 font-medium flex items-center gap-1">
+                                        <span id="mentorStatusDot" class="w-1.5 h-1.5 rounded-full bg-slate-400 inline-block"></span>
+                                        <span id="chatHeaderSubtitleText">Checking status...</span>
+                                    </p>
                                 </div>
                             </div>
 
-                            <button id="teacherTemplatesBtn" onclick="toggleTeacherQuickDrawer()" class="hidden text-xs bg-brand-50 text-brand-700 border border-brand-200 px-3 py-1.5 rounded-xl font-bold hover:bg-brand-100 flex items-center gap-1.5">
-                                <i class="fa-solid fa-bolt"></i> Quick Replies
+                            <button id="teacherTemplatesBtn" onclick="toggleTeacherQuickDrawer()" class="hidden text-xs bg-brand-50 text-brand-700 border border-brand-200 px-3 py-1.5 rounded-xl font-semibold hover:bg-brand-100 flex items-center gap-1.5">
+                                <i class="fa-solid fa-list-check"></i> Quick Replies
                             </button>
                         </div>
 
-                        <!-- MENTOR OFFLINE BANNER (Visible in Student Mentor Mode) -->
-                        <div id="mentorOfflineBanner" class="hidden bg-amber-50 border-b border-amber-200/80 p-3 px-4 flex items-center gap-2.5 text-xs text-amber-900 shrink-0">
-                            <i class="fa-solid fa-circle-info text-amber-600 text-sm shrink-0"></i>
-                            <div class="leading-relaxed text-[11px] sm:text-xs font-semibold">
-                                Our mentor is currently offline. Please leave your message here. We will get back to you as soon as possible. Thank you for your patience!
-                            </div>
-                        </div>
-
-                        <!-- TEACHER QUICK TEMPLATES DRAWER -->
-                        <div id="teacherQuickDrawer" class="hidden border-b border-slate-200 bg-brand-50/90 p-3 overflow-y-auto max-h-56 custom-scrollbar shrink-0">
+                        <div id="teacherQuickDrawer" class="hidden border-b border-slate-200 bg-brand-50/90 p-3 overflow-y-auto max-h-60 custom-scrollbar shrink-0">
                             <div class="text-[11px] font-bold text-brand-900 mb-2 flex items-center justify-between">
-                                <span><i class="fa-solid fa-bolt mr-1"></i> Tap to Send Quick Reply to Student:</span>
-                                <span class="text-[10px] text-brand-700">FAQ Database</span>
+                                <span><i class="fa-solid fa-bolt mr-1"></i> Quick Reply Templates:</span>
                             </div>
-                            <div id="teacherCategoryButtons" class="space-y-3"></div>
+                            <div id="teacherCategoryButtons" class="space-y-2"></div>
                         </div>
 
-                        <!-- MESSAGES STREAM CONTAINER -->
-                        <div id="messagesContainer" class="flex-1 overflow-y-auto p-3 sm:p-5 space-y-3.5 custom-scrollbar">
-                            <!-- Conversation bubbles inserted dynamically -->
+                        <!-- DYNAMIC TEACHER ONLINE / OFFLINE STATUS NOTICE -->
+                        <div id="mentorStatusBanner" class="bg-amber-50 border-b border-amber-200/80 p-2.5 px-4 flex items-center gap-2.5 shrink-0 transition-colors duration-300">
+                            <i id="mentorStatusIcon" class="fa-solid fa-circle-info text-amber-600 text-xs shrink-0"></i>
+                            <p id="mentorStatusNoticeText" class="text-[11px] text-amber-800 font-medium leading-tight">
+                                Our mentor is currently offline. Please leave your message here. We will get back to you as soon as possible. Thank you for your patience!
+                            </p>
                         </div>
 
-                        <!-- BOTTOM NAVIGATION / INPUT BAR -->
-                        <div id="chatBottomBar" class="shrink-0 bg-white border-t border-slate-200">
-                            
-                            <!-- FAQ NAV RETURN BUTTONS (FAQ Mode) -->
-                            <div id="faqNavControls" class="hidden p-3 bg-slate-50 flex items-center justify-between gap-2.5 border-t border-slate-200">
-                                <button onclick="returnToCurrentCategoryQuestions()" class="flex-1 py-3 px-3 bg-white border border-slate-200 hover:bg-brand-50 hover:border-brand-300 text-slate-700 hover:text-brand-700 text-xs font-bold rounded-xl shadow-2xs transition flex items-center justify-center gap-2">
-                                    <i class="fa-solid fa-list-ul"></i> Back to Questions
-                                </button>
-                                <button onclick="showMainMenu()" class="flex-1 py-3 px-3 bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold rounded-xl shadow-sm transition flex items-center justify-center gap-2">
-                                    <i class="fa-solid fa-house"></i> Main Menu
-                                </button>
-                            </div>
+                        <div id="messagesContainer" class="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 custom-scrollbar"></div>
 
-                            <!-- LIVE INPUT FORM (Mentor Mode or Teacher Mode) -->
-                            <form id="mentorInputForm" onsubmit="handleSendMessage(event)" class="p-2.5 sm:p-3 flex items-center gap-2">
-                                <input type="text" id="messageInput" placeholder="Type your message to mentor..." class="flex-1 bg-slate-100 border border-slate-200 focus:border-brand-500 focus:bg-white rounded-2xl px-4 py-2.5 text-xs sm:text-sm text-slate-800 placeholder-slate-400 outline-none transition">
-                                <button type="submit" class="bg-brand-600 hover:bg-brand-500 text-white w-10 h-10 rounded-2xl flex items-center justify-center shadow-md shadow-brand-600/20 active:scale-95 transition shrink-0">
-                                    <i class="fa-solid fa-paper-plane text-xs"></i>
-                                </button>
-                            </form>
-
-                        </div>
+                        <form onsubmit="handleSendMessage(event)" class="p-2.5 sm:p-3 bg-white border-t border-slate-200 flex items-center gap-2 shrink-0">
+                            <input type="text" id="messageInput" placeholder="Type your message to mentor..." class="flex-1 bg-slate-100 border border-slate-200/90 focus:border-brand-500 focus:bg-white rounded-2xl px-4 py-2.5 text-xs sm:text-sm text-slate-800 placeholder-slate-400 outline-none transition">
+                            <button type="submit" class="bg-brand-600 hover:bg-brand-500 text-white w-10 h-10 rounded-2xl flex items-center justify-center shadow-md shadow-brand-600/20 active:scale-95 transition shrink-0">
+                                <i class="fa-solid fa-paper-plane text-xs"></i>
+                            </button>
+                        </form>
 
                     </div>
 
@@ -434,9 +430,8 @@
 
     </div>
 
-    <!-- APPLICATION SCRIPT LOGIC -->
+    <!-- SCRIPT DATA & LOGIC -->
     <script>
-        // ARCHITECTURE PRESERVATION & API SETUP
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyHhk4Eu4RPgy2dMrt4r4RxD7CI2lxDyHJsEinxYAPi-dJlNafCM97Jlkv-cbjbDxuwiA/exec";
         const TEACHER_PIN = "1998";
 
@@ -446,144 +441,163 @@
         let localMessages = [];
         let localStudents = [];
         let syncInterval = null;
-        let currentCategoryIndex = null;
-        let activeView = "menu"; // "menu", "questions", "chat"
-        let currentChatMode = "mentor"; // "mentor" or "faq"
-        let hasWelcomeAnimatedThisSession = false;
+        let currentOpenCategoryIndex = null;
+        let typingIntervalId = null;
 
-        // EXACT FAQ DATABASE WITH ALL QUESTIONS & ANSWERS AS PROVIDED
+        // REAL-TIME BROADCAST CHANNEL FOR TAB SYNC
+        const chatChannel = new BroadcastChannel('live_internship_chat_sync');
+
+        chatChannel.onmessage = (event) => {
+            if (event.data) {
+                if (event.data.type === 'NEW_MESSAGE') {
+                    const incomingMsg = event.data.msg;
+                    if (!localMessages.some(m => m.id === incomingMsg.id)) {
+                        localMessages.push(incomingMsg);
+                        renderMessages();
+                        if (currentUser && currentUser.role === 'teacher') {
+                            ensureStudentInList(incomingMsg.sender);
+                        }
+                    }
+                } else if (event.data.type === 'TEACHER_PING' || event.data.type === 'TEACHER_STATUS') {
+                    if (currentUser && currentUser.role === 'student') {
+                        updateStudentMentorStatusUI(true);
+                    }
+                }
+            }
+        };
+
         const FAQ_DATABASE = [
             {
-                category: "1. Registration & Joining",
-                subtext: "Registration steps and required documents",
-                icon: "fa-clipboard-list",
-                faqs: [
-                    { q: "How can I register for the internship?", a: "Visit the official Internship Portal and complete the registration form." },
-                    { q: "What details are required during registration?", a: "You need to provide your personal details, educational information and other required information." },
-                    { q: "Is a valid email address required?", a: "Yes. You must provide a valid email address because an OTP will be sent for verification." },
-                    { q: "Is a profile photo required?", a: "Yes. You need to upload a clear selfie for your internship profile verification." },
-                    { q: "How will I know whether my registration is successful?", a: "After completing the registration process, check the portal for your registration confirmation." }
+                categoryNumber: 1,
+                categoryName: "Registration & Joining",
+                description: "Registration steps and required documents",
+                questions: [
+                    { id: 1, q: "How can I register for the internship?", a: "Visit the Internship Portal and complete the registration form." },
+                    { id: 2, q: "What documents are required?", a: "Submit photocopies of your Aadhaar Card, PAN Card, highest educational qualification certificate, bank account details/passbook and two recent passport-size photographs." },
+                    { id: 3, q: "Can I edit my registration details?", a: "Contact your mentor for corrections." },
+                    { id: 4, q: "Can I join without completing registration?", a: "No. Registration must be completed before joining." },
+                    { id: 5, q: "Whom should I contact for registration problems?", a: "Contact your mentor for assistance. Choose the Ask Directly to the Mentor option." }
                 ]
             },
             {
-                category: "2. Payment & Registration Fees",
-                subtext: "Fee amount, payment and receipts",
-                icon: "fa-indian-rupee-sign",
-                faqs: [
-                    { q: "What is the internship registration fee?", a: "The registration fee is ₹1,180." },
-                    { q: "How can I pay the registration fee?", a: "You can pay through the available UPI or online payment option." },
-                    { q: "Is payment proof required?", a: "Yes. You must upload a screenshot of the successful payment." },
-                    { q: "What should I do if my payment is successful but the portal does not show confirmation?", a: "Contact your mentor and share your payment details for verification." },
-                    { q: "Can I register without paying the fee?", a: "No. You must complete the payment to finish your registration." },
-                    { q: "Is the registration fee refundable?", a: "Please refer to the official internship guidelines for refund-related information." },
-                    { q: "What should I do if I enter the wrong payment details?", a: "Contact your mentor immediately and explain the issue." }
+                categoryNumber: 2,
+                categoryName: "Payment & Registration Fees",
+                description: "Fee amount, payment and receipts",
+                questions: [
+                    { id: 6, q: "Is there any registration fee?", a: "Yes. The registration fee is ₹1,180." },
+                    { id: 7, q: "How can I make the payment?", a: "You can pay through UPI bank account transfer only." },
+                    { id: 8, q: "Which payment methods are accepted?", a: "Only UPI bank account transfer is accepted." },
+                    { id: 9, q: "Do I need to upload payment proof?", a: "Yes. Upload your payment screenshot and enter the transaction ID." },
+                    { id: 10, q: "Will I receive a payment receipt?", a: "Yes. An acknowledgement receipt will be generated automatically after successful registration." },
+                    { id: 11, q: "What should I do if my payment fails?", a: "Check your payment status first. If the amount is deducted but registration is incomplete, contact your mentor." },
+                    { id: 12, q: "Is the registration fee refundable?", a: "Contact your mentor or Chief Manager for refund-related information." }
                 ]
             },
             {
-                category: "3. Internship Timing & Schedule",
-                subtext: "Starting date, batches and working hours",
-                icon: "fa-calendar-days",
-                faqs: [
-                    { q: "When will the internship start?", a: "The internship will start on the announced commencement date." },
-                    { q: "What is the total duration of the internship?", a: "The internship will continue for 30 working days." },
-                    { q: "How many working hours are required?", a: "The internship requires a total of 120 working hours." },
-                    { q: "What are the reporting times?", a: "Morning shift: 9:15 AM. Evening shift: 1:20 PM." },
-                    { q: "How many hours do I need to work each day?", a: "You are expected to follow the daily working schedule provided by the organisation." },
-                    { q: "Is there a break during working hours?", a: "Yes. A 20-minute break will be provided." },
-                    { q: "Will the internship take place every day?", a: "The internship will follow the official working-day schedule." },
-                    { q: "Where will I receive the daily schedule?", a: "Your mentor will provide the necessary schedule and updates." }
+                categoryNumber: 3,
+                categoryName: "Internship Timing & Schedule",
+                description: "Starting date, batches and working hours",
+                questions: [
+                    { id: 13, q: "What is the internship starting date?", a: "The internship will start in July 2027." },
+                    { id: 14, q: "What is the daily reporting time?", a: "Morning Batch: 09:15 AM. Evening Batch: 01:20 PM." },
+                    { id: 15, q: "What are the working hours?", a: "Each batch has 6 working hours per day." },
+                    { id: 16, q: "How many hours do we need to work daily?", a: "You must complete 6 working hours every working day." },
+                    { id: 17, q: "Do we have a break?", a: "Yes. You will get a 20-minute break." },
+                    { id: 18, q: "Are Saturdays and Sundays working days?", a: "Generally, Saturdays and Sundays are non-working days. However, the office may open on Saturdays if required. Students will be informed in advance." },
+                    { id: 19, q: "How many days will the internship continue?", a: "The internship duration is 30 working days. You must complete a total of 120 working hours." },
+                    { id: 20, q: "Where should I report after arriving?", a: "Report to your assigned department or contact your mentor upon arrival." }
                 ]
             },
             {
-                category: "4. Attendance & Leave",
-                subtext: "Attendance, late arrival and leave",
-                icon: "fa-calendar-check",
-                faqs: [
-                    { q: "Is attendance compulsory?", a: "Yes. Maintaining 100% attendance is compulsory." },
-                    { q: "How will my attendance be recorded?", a: "Attendance will be recorded through the biometric system, official attendance register and daily signature." },
-                    { q: "Can I take leave during the internship?", a: "Leave should be avoided. If you have an emergency, inform your mentor." },
-                    { q: "What should I do if I arrive late?", a: "Inform your mentor immediately and follow the instructions provided." },
-                    { q: "What happens if I miss a working day?", a: "Your attendance and internship completion may be affected." },
-                    { q: "Is daily attendance verification required?", a: "Yes. You must follow the official attendance procedure every working day." },
-                    { q: "Can someone else mark attendance on my behalf?", a: "No. Every student must mark their own attendance." },
-                    { q: "What should I do if my biometric attendance is not recorded?", a: "Inform your mentor immediately so the issue can be checked." },
-                    { q: "Is attendance important for receiving the certificate?", a: "Yes. You must fulfil the attendance requirements to complete the internship." }
+                categoryNumber: 4,
+                categoryName: "Attendance & Leave",
+                description: "Attendance, late arrival and leave",
+                questions: [
+                    { id: 21, q: "Is attendance compulsory?", a: "Yes. Attendance is compulsory on every working day." },
+                    { id: 22, q: "Is 100% attendance required?", a: "Yes. Students are expected to maintain 100% attendance throughout the internship." },
+                    { id: 23, q: "How will my attendance be recorded?", a: "Attendance will be recorded through the biometric system and the official attendance register. You must also sign the register daily." },
+                    { id: 24, q: "What happens if I arrive late?", a: "Inform your mentor immediately. Regular late arrival may affect your attendance record." },
+                    { id: 25, q: "Can I take leave during the internship?", a: "Leave requires prior permission from your mentor." },
+                    { id: 26, q: "What happens if I miss a day?", a: "Your attendance will be affected. Inform your mentor as early as possible." },
+                    { id: 27, q: "Can I complete missed work later?", a: "Ask your mentor for permission and instructions." },
+                    { id: 28, q: "Whom should I inform if I cannot attend?", a: "Inform your mentor as early as possible." },
+                    { id: 29, q: "Can I leave early with permission?", a: "Yes. You must take permission from your mentor before leaving." }
                 ]
             },
             {
-                category: "5. Training & Daily Work",
-                subtext: "Training, tasks and practical guidance",
-                icon: "fa-laptop-code",
-                faqs: [
-                    { q: "What will I learn during the internship?", a: "You will learn practical skills and gain experience through assigned tasks and activities." },
-                    { q: "Will I receive training from a mentor?", a: "Yes. Your mentor will guide you throughout the internship." },
-                    { q: "Do I need to bring my own laptop?", a: "Bringing your personal laptop or tablet is recommended." },
-                    { q: "What if I do not have a laptop?", a: "Inform your mentor. Available resources may be limited." },
-                    { q: "Will tasks be assigned every day?", a: "Yes. You may receive daily tasks according to the internship schedule." },
-                    { q: "Can I ask questions during training?", a: "Yes. You are encouraged to ask questions whenever you need help." },
-                    { q: "What should I do if I do not understand a task?", a: "Ask your mentor for clarification before proceeding." },
-                    { q: "Do I need to maintain a record of my daily work?", a: "Yes. You must maintain your daily work record and logbook." }
+                categoryNumber: 5,
+                categoryName: "Training & Daily Work",
+                description: "Training, tasks and practical guidance",
+                questions: [
+                    { id: 30, q: "What kind of work will I do?", a: "You will perform practical tasks related to your assigned department." },
+                    { id: 31, q: "Will practical training be provided?", a: "Yes. Practical training and proper guidance will be provided." },
+                    { id: 32, q: "Who will guide me during the internship?", a: "Your assigned mentor or supervisor will guide you throughout the internship." },
+                    { id: 33, q: "Do I need previous work experience?", a: "No. Previous work experience is not required. You will learn through training and practice." },
+                    { id: 34, q: "Can I ask questions during training?", a: "Yes. You are always welcome to ask questions whenever you need help." },
+                    { id: 35, q: "What if I cannot understand a task?", a: "Don't worry. Ask your mentor to explain the task again." },
+                    { id: 36, q: "Can I use my own laptop?", a: "Yes. Bringing your own laptop or tablet is highly recommended. Our resources are limited, and using your personal laptop will help you practise and gain better hands-on experience." },
+                    { id: 37, q: "Will I receive practical experience?", a: "Yes. You will gain practical experience by working on real tasks and activities." }
                 ]
             },
             {
-                category: "6. Rules & Discipline",
-                subtext: "Office rules and student conduct",
-                icon: "fa-shield-halved",
-                faqs: [
-                    { q: "Is formal dress compulsory?", a: "Yes. You must wear formal dress or your college uniform as instructed." },
-                    { q: "Can I use my mobile phone during working hours?", a: "Use your mobile phone only when necessary and with permission." },
-                    { q: "Is smoking, alcohol or gutkha allowed?", a: "No. Smoking, alcohol and gutkha are strictly prohibited during the internship." },
-                    { q: "Can I damage or misuse office property?", a: "No. You must handle all office equipment and property carefully." },
-                    { q: "What happens if I damage office property?", a: "You may be held responsible for the damage according to the organisation's rules." },
-                    { q: "Is fighting or misbehaving allowed?", a: "No. All students must maintain proper discipline and respectful behaviour." },
-                    { q: "Can I leave the workplace without permission?", a: "No. You must inform your mentor and obtain permission before leaving." },
-                    { q: "What should I do if I face any problem?", a: "Report the issue to your mentor immediately." }
+                categoryNumber: 6,
+                categoryName: "Rules & Discipline",
+                description: "Office rules and student conduct",
+                questions: [
+                    { id: 38, q: "Are gutkha, alcohol and smoking allowed inside the office?", a: "Absolutely not. These activities are strictly prohibited. Violation will result in immediate cancellation of your internship, certificate ineligibility and an official report sent to your college." },
+                    { id: 39, q: "What happens if I damage office furniture or property?", a: "You will be responsible for the full cost of the damage. Further action may also be taken according to the official rules and regulations." },
+                    { id: 40, q: "What happens if I get involved in a physical fight with another student?", a: "Fighting and physical violence are strictly prohibited. Serious incidents may be reported to the appropriate authorities, including the police, and your college will be informed." },
+                    { id: 41, q: "Is formal dress compulsory?", a: "Yes. Formal dress or the prescribed college uniform is compulsory." },
+                    { id: 42, q: "What should I wear during the internship?", a: "Wear clean, neat and appropriate formal clothing." },
+                    { id: 43, q: "Is punctuality important?", a: "Yes. Always arrive on time and follow your assigned schedule." },
+                    { id: 44, q: "Can I use my mobile phone during working hours?", a: "Yes. You may use your mobile phone when necessary, provided it does not disturb your work or other students." },
+                    { id: 45, q: "What happens if I break an internship rule?", a: "Your mentor will review the matter. Appropriate disciplinary action will be taken according to the internship rules." }
                 ]
             },
             {
-                category: "7. Assignments & Logbook",
-                subtext: "Daily records and assignments",
-                icon: "fa-book-open",
-                faqs: [
-                    { q: "Do I need to complete assignments?", a: "Yes. You must complete all assigned tasks and submit them on time." },
-                    { q: "Is maintaining a daily logbook compulsory?", a: "Yes. You must update your logbook regularly." },
-                    { q: "What should I write in my logbook?", a: "Record your daily activities, tasks completed and work experience." },
-                    { q: "What happens if I do not submit my assignments or logbook?", a: "Your internship completion and certificate eligibility may be affected." }
+                categoryNumber: 7,
+                categoryName: "Assignments & Logbook",
+                description: "Daily records and assignments",
+                questions: [
+                    { id: 46, q: "What is an internship logbook?", a: "A logbook is a record of your daily activities and work." },
+                    { id: 47, q: "Is maintaining a logbook compulsory?", a: "Yes. Every student must maintain a daily logbook." },
+                    { id: 48, q: "What should I write in my daily logbook?", a: "Write the date, completed tasks, activities and what you learned." },
+                    { id: 49, q: "Will my assignments be evaluated?", a: "Yes. Your mentor may review your assignments and work." }
                 ]
             },
             {
-                category: "8. Certificate & Completion",
-                subtext: "Completion and certificate details",
-                icon: "fa-award",
-                faqs: [
-                    { q: "Will I receive an internship certificate?", a: "Yes. Eligible students will receive an internship completion certificate." },
-                    { q: "When will the certificates be distributed?", a: "Certificates are expected to be distributed during the second or third week of August 2027." },
-                    { q: "What are the requirements for receiving the certificate?", a: "You must complete the internship, maintain the required attendance and submit all assigned work." },
-                    { q: "Will I receive a digital certificate?", a: "No. Only a physical hard copy of the certificate will be provided." },
-                    { q: "Do I need to submit a final project report?", a: "Yes. Submitting the final project report is compulsory." },
-                    { q: "Can I receive my certificate if I have incomplete assignments?", a: "You must complete all required assignments before receiving your certificate." },
-                    { q: "What should I do if my certificate contains incorrect information?", a: "Contact your mentor and report the error." },
-                    { q: "Can someone else collect my certificate?", a: "Please contact your mentor for confirmation and instructions." },
-                    { q: "Will I receive my certificate immediately after the internship?", a: "No. Certificates will be distributed according to the announced schedule." },
-                    { q: "What happens if I do not complete the internship?", a: "You may not be eligible for the internship completion certificate." }
+                categoryNumber: 8,
+                categoryName: "Certificate & Completion",
+                description: "Completion and certificate details",
+                questions: [
+                    { id: 50, q: "Will I receive an internship certificate?", a: "Yes. Eligible students will receive an internship certificate." },
+                    { id: 51, q: "What are the requirements for receiving the certificate?", a: "Complete your internship, maintain attendance, submit your logbook and finish assigned work." },
+                    { id: 52, q: "When will the certificate be distributed?", a: "The distribution is scheduled for the second or third week of August 2027." },
+                    { id: 53, q: "Will the certificate mention my internship duration?", a: "Yes. It will mention the applicable internship details." },
+                    { id: 54, q: "Can I receive my certificate online?", a: "No. Only a physical hard copy of the certificate will be provided." },
+                    { id: 55, q: "Will my performance be evaluated?", a: "Yes. Your attendance, discipline, assignments and work may be evaluated." },
+                    { id: 56, q: "What happens after completing the internship?", a: "Complete all formalities and wait for certificate distribution." },
+                    { id: 57, q: "Can I receive my certificate if my attendance is incomplete?", a: "Certificate eligibility depends on the internship requirements." },
+                    { id: 58, q: "Do I need to submit my final project report?", a: "Yes. Submitting the final project report is compulsory." },
+                    { id: 59, q: "Whom should I contact regarding my certificate?", a: "Contact your mentor or internship coordinator." }
                 ]
             },
             {
-                category: "9. Communication & General Support",
-                subtext: "Announcements and general assistance",
-                icon: "fa-headset",
-                faqs: [
-                    { q: "How can I contact my mentor?", a: "Use the Ask Directly to the Mentor option available in the Internship Portal." },
-                    { q: "Where will I receive important announcements?", a: "Important updates and announcements will be shared through the official communication channels." },
-                    { q: "What should I do if I face a technical problem with the portal?", a: "Contact your mentor and explain the problem." },
-                    { q: "Can I update my registration details?", a: "Contact your mentor for assistance before making any changes." },
-                    { q: "What should I do if I forget my login details?", a: "Contact your mentor for help with your account." },
-                    { q: "Who should I contact for internship-related questions?", a: "You can contact your assigned mentor through the Internship Portal." }
+                categoryNumber: 9,
+                categoryName: "Communication & General Support",
+                description: "Announcements and general assistance",
+                questions: [
+                    { id: 60, q: "Whom should I contact if I have a problem?", a: "Contact your assigned mentor." },
+                    { id: 61, q: "Can I contact the teacher after working hours?", a: "Yes. Send a message, and the mentor will reply when available." },
+                    { id: 62, q: "How will I receive important announcements?", a: "Updates will be shared through official communication channels." },
+                    { id: 63, q: "Can I change my assigned department?", a: "Department changes require your mentor's approval." },
+                    { id: 64, q: "How can I update my personal information?", a: "Contact your mentor and request an update." },
+                    { id: 65, q: "Can I share my internship experience on social media?", a: "Yes. Do not share confidential information." },
+                    { id: 66, q: "How can I provide feedback about the internship?", a: "Share your feedback directly with your mentor." }
                 ]
             }
         ];
 
-        // TIME GREETING CALCULATOR (24-Hour Rules)
         function getTimeBasedGreeting() {
             const hour = new Date().getHours();
             if (hour >= 5 && hour < 12) return "Good morning";
@@ -592,9 +606,7 @@
             return "Good night";
         }
 
-        // INITIALIZATION
         window.addEventListener('DOMContentLoaded', () => {
-            populateTeacherCategoryDrawer();
             const savedUser = localStorage.getItem('school_chat_user');
             if (savedUser) {
                 currentUser = JSON.parse(savedUser);
@@ -613,14 +625,14 @@
             const authNotice = document.getElementById('authNotice');
 
             if (role === 'student') {
-                tabStudent.className = "flex-1 py-2.5 text-xs font-bold rounded-xl transition-all duration-200 bg-white text-brand-700 shadow-sm";
-                tabTeacher.className = "flex-1 py-2.5 text-xs font-bold rounded-xl transition-all duration-200 text-slate-500";
+                tabStudent.className = "flex-1 py-2.5 text-xs font-semibold rounded-xl transition-all duration-200 bg-white text-brand-700 shadow-xs";
+                tabTeacher.className = "flex-1 py-2.5 text-xs font-semibold rounded-xl transition-all duration-200 text-slate-500";
                 nameGroup.classList.remove('hidden');
                 pinLabel.textContent = "4-Digit Security PIN";
                 authNotice.classList.remove('hidden');
             } else {
-                tabTeacher.className = "flex-1 py-2.5 text-xs font-bold rounded-xl transition-all duration-200 bg-white text-brand-700 shadow-sm";
-                tabStudent.className = "flex-1 py-2.5 text-xs font-bold rounded-xl transition-all duration-200 text-slate-500";
+                tabTeacher.className = "flex-1 py-2.5 text-xs font-semibold rounded-xl transition-all duration-200 bg-white text-brand-700 shadow-xs";
+                tabStudent.className = "flex-1 py-2.5 text-xs font-semibold rounded-xl transition-all duration-200 text-slate-500";
                 nameGroup.classList.add('hidden');
                 pinLabel.textContent = "Teacher Access PIN";
                 authNotice.classList.add('hidden');
@@ -636,14 +648,14 @@
                     currentUser = { name: "Teacher", role: "teacher" };
                     saveUserAndLaunch();
                 } else {
-                    alert("Incorrect Teacher Security PIN.");
+                    alert("Incorrect Teacher PIN.");
                 }
                 return;
             }
 
             const name = document.getElementById('authName').value.trim();
             if (!name || pin.length < 4) {
-                alert("Please enter full Name and 4-digit PIN.");
+                alert("Please enter your full Name and 4-digit PIN.");
                 return;
             }
 
@@ -677,242 +689,203 @@
             document.getElementById('navRoleIcon').className = currentUser.role === 'teacher' ? 'fa-solid fa-chalkboard-user' : 'fa-solid fa-user-graduate';
 
             const teacherSidebar = document.getElementById('teacherSidebar');
-            const teacherTemplatesBtn = document.getElementById('teacherTemplatesBtn');
+            const mobileBackBtn = document.getElementById('mobileBackBtn');
+            const studentMainView = document.getElementById('studentMainView');
+            const mentorChatView = document.getElementById('mentorChatView');
 
             if (currentUser.role === 'teacher') {
                 teacherSidebar.classList.remove('hidden');
-                teacherTemplatesBtn.classList.remove('hidden');
-                openTeacherChatView();
+                mobileBackBtn.classList.remove('hidden');
+                studentMainView.classList.add('hidden');
+                mentorChatView.classList.remove('hidden');
+                document.getElementById('teacherTemplatesBtn').classList.remove('hidden');
+                document.getElementById('chatHeaderTitle').textContent = "Select Student";
+                document.getElementById('chatHeaderSubtitleText').textContent = "Tap student list on top left";
+                populateTeacherQuickDrawer();
+                
+                // Broadcast teacher presence every 3 seconds
+                setInterval(() => {
+                    chatChannel.postMessage({ type: 'TEACHER_PING', name: 'Teacher' });
+                    localStorage.setItem('last_teacher_active', Date.now().toString());
+                }, 3000);
             } else {
                 teacherSidebar.classList.add('hidden');
-                teacherTemplatesBtn.classList.add('hidden');
-                showMainMenu();
-                if (!hasWelcomeAnimatedThisSession) {
-                    triggerWelcomeTypingAnimation();
-                    hasWelcomeAnimatedThisSession = true;
-                }
+                mobileBackBtn.classList.add('hidden');
+                studentMainView.classList.remove('hidden');
+                mentorChatView.classList.add('hidden');
+                document.getElementById('teacherTemplatesBtn').classList.add('hidden');
+                startWelcomeTypingAnimation();
+                updateStudentMentorStatusUI(checkIsTeacherOnline());
             }
 
             loadRemoteData();
             if (syncInterval) clearInterval(syncInterval);
-            syncInterval = setInterval(loadRemoteData, 5000);
+            syncInterval = setInterval(loadRemoteData, 1500);
         }
 
-        // TYPING ANIMATION FOR WELCOME GREETING
-        function triggerWelcomeTypingAnimation() {
-            const container = document.getElementById('welcomeTypingText');
-            if (!container) return;
-            
-            const greeting = getTimeBasedGreeting();
-            const textToType = `${greeting}, ${currentUser.name}! How can I assist you today?`;
-            
-            container.textContent = "";
-            container.classList.add('typing-cursor');
-            let i = 0;
-            const speed = 40;
-
-            function typeWriter() {
-                if (i < textToType.length) {
-                    container.textContent += textToType.charAt(i);
-                    i++;
-                    setTimeout(typeWriter, speed);
-                } else {
-                    container.classList.remove('typing-cursor');
-                }
-            }
-            typeWriter();
+        function checkIsTeacherOnline() {
+            const lastActive = localStorage.getItem('last_teacher_active');
+            if (!lastActive) return false;
+            return (Date.now() - parseInt(lastActive)) < 7000;
         }
 
-        function handleLogout() {
-            localStorage.removeItem('school_chat_user');
-            currentUser = null;
-            hasWelcomeAnimatedThisSession = false;
-            if (syncInterval) clearInterval(syncInterval);
-            location.reload();
-        }
+        function updateStudentMentorStatusUI(isOnline) {
+            const subtitleText = document.getElementById('chatHeaderSubtitleText');
+            const statusDot = document.getElementById('mentorStatusDot');
+            const statusBanner = document.getElementById('mentorStatusBanner');
+            const noticeIcon = document.getElementById('mentorStatusIcon');
+            const noticeText = document.getElementById('mentorStatusNoticeText');
 
-        // NAVIGATION VIEWS
-        function showMainMenu() {
-            activeView = "menu";
-            document.getElementById('studentMainMenuView').classList.remove('hidden');
-            document.getElementById('faqQuestionsView').classList.add('hidden');
-            document.getElementById('chatInterfaceView').classList.add('hidden');
-        }
+            if (!subtitleText || !statusBanner) return;
 
-        function openFaqCategory(categoryIdx) {
-            currentCategoryIndex = categoryIdx;
-            const catData = FAQ_DATABASE[categoryIdx];
-            activeView = "questions";
-
-            document.getElementById('studentMainMenuView').classList.add('hidden');
-            document.getElementById('faqQuestionsView').classList.remove('hidden');
-            document.getElementById('chatInterfaceView').classList.add('hidden');
-
-            document.getElementById('faqCategoryTitle').textContent = catData.category;
-
-            // Calculate global question numbers across categories
-            let startQNumber = 1;
-            for (let i = 0; i < categoryIdx; i++) {
-                startQNumber += FAQ_DATABASE[i].faqs.length;
-            }
-
-            const listContainer = document.getElementById('faqQuestionsList');
-            listContainer.innerHTML = catData.faqs.map((item, index) => {
-                const qNum = startQNumber + index;
-                return `
-                    <div onclick="selectFaqQuestion(${categoryIdx}, ${index})" class="p-4 bg-white hover:bg-brand-50/60 border border-slate-200/80 hover:border-brand-300 rounded-2xl shadow-2xs transition cursor-pointer flex items-center justify-between group active:scale-[0.99]">
-                        <div class="flex items-center gap-3.5">
-                            <span class="w-7 h-7 rounded-lg bg-emerald-50 text-brand-700 text-xs font-bold flex items-center justify-center shrink-0 border border-brand-200/60 group-hover:bg-brand-600 group-hover:text-white group-hover:border-brand-600 transition">
-                                ${qNum}
-                            </span>
-                            <h4 class="text-xs sm:text-sm font-semibold text-slate-800 group-hover:text-brand-900 leading-snug">
-                                ${item.q}
-                            </h4>
-                        </div>
-                        <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:text-brand-600 transition shrink-0 ml-2"></i>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function selectFaqQuestion(catIdx, questionIdx) {
-            const item = FAQ_DATABASE[catIdx].faqs[questionIdx];
-            currentChatMode = "faq";
-
-            const qMsgId = 'tmp_' + Date.now();
-            const aMsgId = 'tmp_' + (Date.now() + 1);
-
-            // Push Q & A into local history
-            const qMsg = {
-                id: qMsgId,
-                timestamp: new Date().toISOString(),
-                sender: currentUser.name,
-                receiver: "Assistant",
-                message: item.q,
-                senderRole: "student"
-            };
-
-            const aMsg = {
-                id: aMsgId,
-                timestamp: new Date().toISOString(),
-                sender: "Assistant",
-                receiver: currentUser.name,
-                message: item.a,
-                senderRole: "assistant",
-                isTypingAnswer: true // Flag to animate text output
-            };
-
-            localMessages.push(qMsg);
-            localMessages.push(aMsg);
-
-            openChatInterfaceView({
-                title: FAQ_DATABASE[catIdx].category,
-                subtitle: "Automated FAQ Answer",
-                isMentorMode: false
-            });
-
-            renderMessages();
-
-            // Animate Answer Typing Effect dynamically
-            setTimeout(() => {
-                animateAnswerTyping(aMsgId, item.a);
-            }, 300);
-        }
-
-        function animateAnswerTyping(msgId, fullText) {
-            const el = document.getElementById(`ans_text_${msgId}`);
-            if (!el) return;
-
-            el.textContent = "";
-            el.classList.add('typing-cursor');
-            let idx = 0;
-
-            function type() {
-                if (idx < fullText.length) {
-                    el.textContent += fullText.charAt(idx);
-                    idx++;
-                    setTimeout(type, 18);
-                } else {
-                    el.classList.remove('typing-cursor');
-                    const msgObj = localMessages.find(m => m.id === msgId);
-                    if (msgObj) delete msgObj.isTypingAnswer;
-                }
-            }
-            type();
-        }
-
-        function openMentorChatView() {
-            currentChatMode = "mentor";
-            openChatInterfaceView({
-                title: "Ask Directly to Mentor",
-                subtitle: "Direct Personal Messaging",
-                isMentorMode: true
-            });
-            renderMessages();
-        }
-
-        function openTeacherChatView() {
-            currentChatMode = "mentor";
-            openChatInterfaceView({
-                title: activeSelectedStudent || "Select Student",
-                subtitle: "Student Chat History",
-                isMentorMode: true
-            });
-            renderMessages();
-        }
-
-        function openChatInterfaceView({ title, subtitle, isMentorMode }) {
-            activeView = "chat";
-            document.getElementById('studentMainMenuView').classList.add('hidden');
-            document.getElementById('faqQuestionsView').classList.add('hidden');
-            document.getElementById('chatInterfaceView').classList.remove('hidden');
-
-            document.getElementById('chatHeaderTitle').textContent = title;
-            document.getElementById('chatHeaderSubtitle').textContent = subtitle;
-
-            const mentorBanner = document.getElementById('mentorOfflineBanner');
-            const faqNav = document.getElementById('faqNavControls');
-            const inputForm = document.getElementById('mentorInputForm');
-
-            if (currentUser.role === 'student') {
-                if (isMentorMode) {
-                    mentorBanner.classList.remove('hidden');
-                    faqNav.classList.add('hidden');
-                    inputForm.classList.remove('hidden');
-                } else {
-                    mentorBanner.classList.add('hidden');
-                    faqNav.classList.remove('hidden');
-                    inputForm.classList.add('hidden');
-                }
+            if (isOnline) {
+                subtitleText.textContent = "Online | Direct Support Channel";
+                statusDot.className = "w-1.5 h-1.5 rounded-full bg-brand-500 inline-block animate-pulse";
+                statusBanner.className = "bg-brand-50 border-b border-brand-200/80 p-2.5 px-4 flex items-center gap-2.5 shrink-0 transition-colors duration-300";
+                noticeIcon.className = "fa-solid fa-circle-check text-brand-600 text-xs shrink-0";
+                noticeText.className = "text-[11px] text-brand-900 font-medium leading-tight";
+                noticeText.innerHTML = "<strong>Teacher is currently ONLINE!</strong> You can type your message or ask any question directly below.";
             } else {
-                mentorBanner.classList.add('hidden');
-                faqNav.classList.add('hidden');
-                inputForm.classList.remove('hidden');
+                subtitleText.textContent = "Offline | Leave a message";
+                statusDot.className = "w-1.5 h-1.5 rounded-full bg-slate-400 inline-block";
+                statusBanner.className = "bg-amber-50 border-b border-amber-200/80 p-2.5 px-4 flex items-center gap-2.5 shrink-0 transition-colors duration-300";
+                noticeIcon.className = "fa-solid fa-circle-info text-amber-600 text-xs shrink-0";
+                noticeText.className = "text-[11px] text-amber-800 font-medium leading-tight";
+                noticeText.textContent = "Our mentor is currently offline. Please leave your message here. We will get back to you as soon as possible. Thank you for your patience!";
             }
         }
 
-        function returnToCurrentCategoryQuestions() {
-            if (currentCategoryIndex !== null) {
-                openFaqCategory(currentCategoryIndex);
+        function startWelcomeTypingAnimation() {
+            const welcomeKey = `welcome_anim_seen_${currentUser.name}`;
+            const greeting = getTimeBasedGreeting();
+            const welcomeMsgText = `${greeting}, ${currentUser.name}! How can I assist you today?`;
+            const welcomeTextEl = document.getElementById('welcomeText');
+
+            if (sessionStorage.getItem(welcomeKey)) {
+                welcomeTextEl.textContent = welcomeMsgText;
+                return;
+            }
+
+            welcomeTextEl.textContent = "";
+            let idx = 0;
+            const timer = setInterval(() => {
+                if (idx < welcomeMsgText.length) {
+                    welcomeTextEl.textContent += welcomeMsgText.charAt(idx);
+                    idx++;
+                } else {
+                    clearInterval(timer);
+                    sessionStorage.setItem(welcomeKey, "true");
+                }
+            }, 30);
+        }
+
+        function showMainMenu() {
+            document.getElementById('mainMenuGrid').classList.remove('hidden');
+            document.getElementById('mainMenuHeading').classList.remove('hidden');
+            document.getElementById('welcomeBanner').classList.remove('hidden');
+            document.getElementById('faqBreadcrumb').classList.add('hidden');
+            document.getElementById('faqQuestionsContainer').classList.add('hidden');
+            document.getElementById('faqAnswerDisplay').classList.add('hidden');
+        }
+
+        function openFAQCategory(catIdx) {
+            currentOpenCategoryIndex = catIdx;
+            const cat = FAQ_DATABASE[catIdx];
+
+            document.getElementById('mainMenuGrid').classList.add('hidden');
+            document.getElementById('mainMenuHeading').classList.add('hidden');
+            document.getElementById('welcomeBanner').classList.add('hidden');
+
+            document.getElementById('faqBreadcrumb').classList.remove('hidden');
+            document.getElementById('categoryTitleBadge').textContent = `${cat.categoryNumber}. ${cat.categoryName}`;
+
+            const container = document.getElementById('faqQuestionsContainer');
+            container.classList.remove('hidden');
+            document.getElementById('faqAnswerDisplay').classList.add('hidden');
+
+            container.innerHTML = `
+                <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
+                    Select a question from ${cat.categoryName}:
+                </div>
+                ${cat.questions.map((qObj) => `
+                    <div onclick="selectFAQQuestion(${catIdx}, ${qObj.id})" class="bg-white hover:bg-brand-50/50 border border-slate-200 hover:border-brand-300 p-3.5 rounded-xl cursor-pointer transition shadow-2xs hover:shadow-xs flex items-center justify-between group">
+                        <div class="flex items-center gap-3">
+                            <span class="w-7 h-7 rounded-lg bg-brand-100 text-brand-700 text-xs font-bold flex items-center justify-center shrink-0">${qObj.id}</span>
+                            <span class="text-xs sm:text-sm font-semibold text-slate-800 group-hover:text-brand-900">${qObj.q}</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-brand-600 transition-transform group-hover:translate-x-0.5"></i>
+                    </div>
+                `).join('')}
+            `;
+        }
+
+        function selectFAQQuestion(catIdx, qId) {
+            const cat = FAQ_DATABASE[catIdx];
+            const qObj = cat.questions.find(item => item.id === qId);
+
+            document.getElementById('faqQuestionsContainer').classList.add('hidden');
+            const displayEl = document.getElementById('faqAnswerDisplay');
+            displayEl.classList.remove('hidden');
+
+            document.getElementById('displayQuestionText').textContent = `${qObj.id}. ${qObj.q}`;
+            
+            const ansEl = document.getElementById('displayAnswerText');
+            ansEl.textContent = "";
+
+            if (typingIntervalId) clearInterval(typingIntervalId);
+
+            let i = 0;
+            const fullAnswer = qObj.a;
+            typingIntervalId = setInterval(() => {
+                if (i < fullAnswer.length) {
+                    ansEl.textContent += fullAnswer.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(typingIntervalId);
+                }
+            }, 20);
+        }
+
+        function backToQuestionsList() {
+            if (currentOpenCategoryIndex !== null) {
+                openFAQCategory(currentOpenCategoryIndex);
             } else {
                 showMainMenu();
             }
         }
 
-        // BACKEND SYNCHRONIZATION
+        function openMentorChatInterface() {
+            document.getElementById('studentMainView').classList.add('hidden');
+            document.getElementById('mentorChatView').classList.remove('hidden');
+            if (currentUser.role === 'student') {
+                updateStudentMentorStatusUI(checkIsTeacherOnline());
+            }
+            renderMessages();
+        }
+
+        function exitMentorChat() {
+            if (currentUser.role === 'student') {
+                document.getElementById('mentorChatView').classList.add('hidden');
+                document.getElementById('studentMainView').classList.remove('hidden');
+                showMainMenu();
+            }
+        }
+
+        function handleLogout() {
+            if (confirm("Log out from portal?")) {
+                localStorage.removeItem('school_chat_user');
+                currentUser = null;
+                if (syncInterval) clearInterval(syncInterval);
+                location.reload();
+            }
+        }
+
         async function loadRemoteData() {
-            updateSyncStatus('Syncing...');
             try {
                 const resMsgs = await fetch(`${APPS_SCRIPT_URL}?action=getMessages`);
                 const msgsData = await resMsgs.json();
                 if (Array.isArray(msgsData)) {
-                    const tempItems = localMessages.filter(m => m.sending || m.sender === "Assistant");
                     localMessages = msgsData;
-                    tempItems.forEach(tmp => {
-                        if (!localMessages.some(m => m.message === tmp.message && m.sender === tmp.sender)) {
-                            localMessages.push(tmp);
-                        }
-                    });
                 }
 
                 if (currentUser.role === 'teacher') {
@@ -922,13 +895,22 @@
                         localStudents = usersData.filter(u => u.role !== 'Teacher');
                         renderStudentList();
                     }
+                } else {
+                    updateStudentMentorStatusUI(checkIsTeacherOnline());
                 }
 
-                updateSyncStatus('Connected');
-                if (activeView === 'chat') renderMessages();
+                updateSyncStatus('Live Sync');
+                renderMessages();
             } catch (err) {
-                updateSyncStatus('Connected');
-                if (activeView === 'chat') renderMessages();
+                updateSyncStatus('Local');
+                renderMessages();
+            }
+        }
+
+        function ensureStudentInList(studentName) {
+            if (!localStudents.some(s => s.name === studentName)) {
+                localStudents.push({ name: studentName, role: 'student' });
+                renderStudentList();
             }
         }
 
@@ -937,19 +919,19 @@
             if (!container) return;
 
             if (localStudents.length === 0) {
-                container.innerHTML = `<div class="p-4 text-center text-xs text-slate-400">No students registered yet.</div>`;
+                container.innerHTML = `<div class="p-4 text-center text-xs text-slate-400">No registered students found.</div>`;
                 return;
             }
 
             container.innerHTML = localStudents.map(student => {
                 const isActive = activeSelectedStudent === student.name;
                 return `
-                    <div onclick="selectStudent('${student.name}')" class="p-3 rounded-xl cursor-pointer transition flex items-center justify-between ${isActive ? 'bg-brand-600 text-white font-semibold shadow-sm' : 'bg-slate-100 hover:bg-slate-200/80 text-slate-700'}">
+                    <div onclick="selectStudent('${student.name}')" class="p-3 rounded-xl cursor-pointer transition flex items-center justify-between ${isActive ? 'bg-brand-600 text-white font-medium shadow-xs' : 'bg-slate-100 hover:bg-slate-200/80 text-slate-700'}">
                         <div class="flex items-center gap-2.5">
                             <div class="w-8 h-8 rounded-full ${isActive ? 'bg-white/20 text-white' : 'bg-brand-100 text-brand-700'} flex items-center justify-center text-xs">
                                 <i class="fa-solid fa-user-graduate"></i>
                             </div>
-                            <span class="text-xs font-bold truncate max-w-[130px]">${student.name}</span>
+                            <span class="text-xs font-semibold truncate max-w-[130px]">${student.name}</span>
                         </div>
                         <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
                     </div>
@@ -960,22 +942,28 @@
         function selectStudent(studentName) {
             activeSelectedStudent = studentName;
             document.getElementById('chatHeaderTitle').textContent = studentName;
-            document.getElementById('chatHeaderSubtitle').textContent = "Student Chat History";
+            document.getElementById('chatHeaderSubtitleText').textContent = "Student Chat History";
+            document.getElementById('chatHeaderIcon').className = "fa-solid fa-user-graduate";
+            
+            if (window.innerWidth < 640) {
+                document.getElementById('teacherSidebar').classList.add('hidden');
+            }
+
             renderStudentList();
             renderMessages();
         }
 
-        function populateTeacherCategoryDrawer() {
+        function populateTeacherQuickDrawer() {
             const container = document.getElementById('teacherCategoryButtons');
             if (!container) return;
 
-            container.innerHTML = FAQ_DATABASE.map(cat => `
+            container.innerHTML = FAQ_DATABASE.map((cat) => `
                 <div class="bg-white p-2.5 rounded-xl border border-brand-200/60 shadow-2xs">
-                    <div class="text-[11px] font-bold text-brand-800 mb-1.5">${cat.category}</div>
+                    <div class="text-[11px] font-bold text-brand-800 mb-1">${cat.categoryNumber}. ${cat.categoryName}</div>
                     <div class="flex flex-wrap gap-1.5">
-                        ${cat.faqs.map(item => `
-                            <button onclick="teacherQuickSend('${item.a.replace(/'/g, "\\'")}')" class="px-2.5 py-1 bg-slate-100 hover:bg-brand-600 hover:text-white rounded-lg text-[10px] text-slate-700 transition text-left">
-                                ${item.q}
+                        ${cat.questions.map(q => `
+                            <button onclick="teacherQuickSend('${q.a.replace(/'/g, "\\'")}')" class="px-2.5 py-1 bg-slate-100 hover:bg-brand-600 hover:text-white rounded-lg text-[10px] text-slate-700 transition">
+                                ${q.q}
                             </button>
                         `).join('')}
                     </div>
@@ -1013,7 +1001,6 @@
             return date.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
         }
 
-        // RENDER MESSAGES WITH BIGGER CLEAN FORMATTING FOR FAQ ANSWERS & OPTIMISTIC RENDERING STABILITY
         function renderMessages() {
             const container = document.getElementById('messagesContainer');
             if (!container) return;
@@ -1021,20 +1008,13 @@
             let filtered = [];
 
             if (currentUser.role === 'student') {
-                if (currentChatMode === 'faq') {
-                    filtered = localMessages.filter(m => m.sender === currentUser.name || m.sender === "Assistant");
-                } else {
-                    filtered = localMessages.filter(m => 
-                        (m.sender === currentUser.name && m.receiver === 'Teacher') || 
-                        (m.sender === 'Teacher' && m.receiver === currentUser.name)
-                    );
-                }
+                filtered = localMessages.filter(m => m.sender === currentUser.name || m.receiver === currentUser.name);
             } else {
                 if (!activeSelectedStudent) {
                     container.innerHTML = `
                         <div class="h-full flex flex-col items-center justify-center text-slate-400 text-xs text-center p-4">
                             <i class="fa-solid fa-comments text-3xl mb-2 text-slate-300"></i>
-                            Select a student from the sidebar roster to view conversation.
+                            Select a student from the sidebar to start chatting.
                         </div>
                     `;
                     return;
@@ -1046,7 +1026,7 @@
                 container.innerHTML = `
                     <div class="h-full flex flex-col items-center justify-center text-slate-400 text-xs text-center p-4">
                         <i class="fa-regular fa-paper-plane text-2xl mb-2 text-slate-300"></i>
-                        No conversation history yet. Type a message below!
+                        No chat history. Type your message below!
                     </div>
                 `;
                 return;
@@ -1064,32 +1044,24 @@
                     lastDateStr = msgDateStr;
                     html += `
                         <div class="flex justify-center my-2">
-                            <span class="bg-slate-200/80 text-slate-600 text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-2xs">${msgDateStr}</span>
+                            <span class="bg-slate-200/80 text-slate-600 text-[10px] font-semibold px-2.5 py-0.5 rounded-full shadow-2xs">${msgDateStr}</span>
                         </div>
                     `;
                 }
 
-                const isAssistant = m.sender === "Assistant";
-
                 html += `
-                    <div class="flex flex-col ${isMe ? 'items-end' : 'items-start'} my-1.5">
-                        <div class="max-w-[88%] sm:max-w-[80%] rounded-2xl ${isAssistant ? 'p-4 sm:p-5 text-sm sm:text-base font-semibold bg-white text-slate-900 border-2 border-brand-500/80 shadow-md' : 'px-4 py-3 text-xs sm:text-sm'} ${
+                    <div class="flex flex-col ${isMe ? 'items-end' : 'items-start'} my-1">
+                        <div class="max-w-[85%] sm:max-w-[75%] rounded-2xl px-3.5 py-2 text-xs sm:text-sm leading-snug ${
                             isMe 
                             ? 'bg-brand-600 text-white rounded-br-none shadow-xs' 
-                            : isAssistant ? 'rounded-bl-none' : 'bg-white text-slate-800 border border-slate-200/80 rounded-bl-none shadow-xs'
+                            : 'bg-white text-slate-800 border border-slate-200/80 rounded-bl-none shadow-xs'
                         }">
-                            <div class="text-[10px] font-extrabold ${isMe ? 'text-brand-100' : 'text-brand-700'} mb-1 flex justify-between items-center gap-3">
+                            <div class="text-[10px] font-bold ${isMe ? 'text-brand-100' : 'text-brand-700'} mb-0.5 flex justify-between gap-3">
                                 <span>${m.sender}</span>
-                                ${isAssistant ? '<span class="px-2 py-0.5 bg-brand-100 text-brand-800 rounded-md text-[9px]">Verified Answer</span>' : ''}
                             </div>
-                            
-                            <div id="ans_text_${m.id}" class="${isAssistant ? 'text-slate-800 leading-relaxed font-bold' : ''}">
-                                ${m.isTypingAnswer ? '' : m.message}
-                            </div>
-                            
-                            <div class="text-[9px] text-right mt-1.5 opacity-70 font-semibold flex items-center justify-end gap-1">
+                            <div>${m.message}</div>
+                            <div class="text-[9px] text-right mt-1 opacity-75 font-medium flex items-center justify-end gap-1">
                                 <span>${msgTimeStr}</span>
-                                ${m.sending ? '<i class="fa-solid fa-spinner animate-spin text-[8px]"></i>' : ''}
                             </div>
                         </div>
                     </div>
@@ -1100,7 +1072,6 @@
             container.scrollTop = container.scrollHeight;
         }
 
-        // OPTIMISTIC MESSAGE HANDLING
         function handleSendMessage(e) {
             e.preventDefault();
             const input = document.getElementById('messageInput');
@@ -1108,12 +1079,12 @@
             if (!text) return;
 
             if (currentUser.role === 'teacher' && !activeSelectedStudent) {
-                alert("Please select a student first.");
+                alert("Select a student to message first.");
                 return;
             }
 
-            const tempId = 'temp_' + Date.now();
             const receiver = currentUser.role === 'student' ? 'Teacher' : activeSelectedStudent;
+            const tempId = "msg_" + Date.now() + "_" + Math.random().toString(36).substr(2, 4);
 
             const newMsg = {
                 id: tempId,
@@ -1121,53 +1092,44 @@
                 sender: currentUser.name,
                 receiver: receiver,
                 message: text,
-                senderRole: currentUser.role,
-                sending: true
+                senderRole: currentUser.role
             };
 
             localMessages.push(newMsg);
             renderMessages();
             input.value = "";
 
-            postMessageToSheet(newMsg, tempId);
+            if (currentUser.role === 'teacher') {
+                ensureStudentInList(receiver);
+            }
+
+            chatChannel.postMessage({ type: 'NEW_MESSAGE', msg: newMsg });
+            postMessageToSheet(newMsg);
         }
 
-        function postMessageToSheet(msgData, tempId) {
-            updateSyncStatus('Syncing...');
-            try {
-                fetch(APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        action: "sendMessage",
-                        sender: msgData.sender,
-                        receiver: msgData.receiver,
-                        message: msgData.message,
-                        senderRole: msgData.senderRole
-                    })
-                }).then(() => {
-                    const target = localMessages.find(m => m.id === tempId);
-                    if (target) target.sending = false;
-                    updateSyncStatus('Connected');
-                    renderMessages();
-                }).catch(() => {
-                    const target = localMessages.find(m => m.id === tempId);
-                    if (target) target.sending = false;
-                    updateSyncStatus('Connected');
-                    renderMessages();
-                });
-            } catch (err) {
-                const target = localMessages.find(m => m.id === tempId);
-                if (target) target.sending = false;
-                updateSyncStatus('Connected');
-                renderMessages();
-            }
+        function postMessageToSheet(msgData) {
+            fetch(APPS_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: "sendMessage",
+                    sender: msgData.sender,
+                    receiver: msgData.receiver,
+                    message: msgData.message,
+                    senderRole: msgData.senderRole
+                })
+            }).catch(() => {});
         }
 
         function updateSyncStatus(text) {
             const badge = document.getElementById('syncText');
             if (badge) badge.textContent = text;
+        }
+
+        function toggleMobileSidebar() {
+            const sidebar = document.getElementById('teacherSidebar');
+            sidebar.classList.toggle('hidden');
         }
     </script>
 </body>
